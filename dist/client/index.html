@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>supernova</title>
+        <link rel="stylesheet" href="bulma.min.css">
+        <style>
+            body { margin: 0; overflow: hidden;  }
+
+            main { margin: 0; overflow: hidden;  }
+            canvas { display: block; }
+
+            ::-webkit-scrollbar {
+                width: 7px; /* Width of vertical scrollbar */
+                height: 12px; /* Height of horizontal scrollbar */
+                transition: color 0.2s ease-in;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: transparent; /* Light gray track */
+                border-radius: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: #888; /* Darker gray thumb */
+                border-radius: 10px;
+            }
+
+            /* Style the thumb on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #555; /* Darker thumb when hovered */
+            }
+
+
+            #ui {
+              position: absolute;
+              right: 20px;
+              top: 20px;
+              width: 600px;
+              height: calc(100vh - 40px);
+              padding: 40px;
+              padding-right: 5px;
+            }
+            
+            #content {
+                padding-right: 20px;
+                overflow-y: auto;
+                height: 100%;
+            }
+          </style>
+
+    </head>
+
+    <body>
+        <script type="module" src="bundle.js"></script>
+        <div id="ui" class="box" data-theme="dark">
+            <div id="content">
+                <h1 id="stage-heading" class="title">Stage 1</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis convallis porttitor felis, sit amet pellentesque justo dapibus non. Vestibulum dolor lectus, condimentum a ex ac, facilisis eleifend risus. Quisque vitae nisi nec turpis rhoncus feugiat. Mauris scelerisque dolor lacinia, dapibus diam eu, egestas velit. Integer et ultricies nunc. Etiam quis ultricies risus, nec imperdiet diam. Maecenas massa erat, laoreet sit amet molestie ut, congue vitae arcu. Sed vestibulum molestie sem, sit amet consectetur lacus sollicitudin ac. Quisque scelerisque interdum pulvinar.
+    
+    Mauris purus metus, ullamcorper quis ultrices non, consectetur ut justo. Donec faucibus in diam vitae ultricies. Proin imperdiet efficitur sapien, eu viverra arcu tempus in. Integer tempor diam non justo porttitor, id bibendum augue rhoncus. Suspendisse potenti. Duis et lectus facilisis, bibendum turpis quis, ultrices dui. Vivamus ut tempus ex, sed tincidunt dolor. Curabitur id nisl pharetra, sagittis felis at, ullamcorper urna. Vestibulum vitae elit nulla. Aliquam nec sapien dictum, hendrerit tortor et, consectetur ligula. Curabitur vel mauris in diam vehicula vestibulum. Curabitur eu efficitur arcu. Phasellus sodales facilisis sapien nec venenatis.
+    
+    Sed at diam at leo feugiat efficitur. Integer posuere dictum consequat. Nullam dui tortor, accumsan ut gravida ac, mollis at sem. Curabitur lobortis, velit vitae ornare auctor, mauris sem tempor urna, a interdum dolor sem in diam. Praesent placerat porta orci feugiat facilisis. Fusce congue efficitur suscipit. Morbi rhoncus feugiat lorem, et fermentum ante congue in. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    
+    Sed viverra sapien magna, in condimentum tellus pretium vitae. Integer pulvinar ante magna, et elementum nulla bibendum eget. Integer pretium lorem vitae volutpat convallis. Sed porta a dolor id porttitor. Etiam et neque vel eros feugiat placerat. Sed accumsan nibh enim, quis pellentesque felis finibus sed. Proin eu velit at urna mattis posuere sed egestas est. Aenean est enim, auctor et justo sit amet, hendrerit elementum nisl.
+    
+    Donec sollicitudin egestas nunc eget aliquet. Sed rutrum, quam sit amet vestibulum interdum, erat tellus tempor sem, non viverra mi neque ac dui. Nulla venenatis, elit a sodales laoreet, ex felis vestibulum nunc, sit amet ullamcorper justo metus ut velit. Nulla sed dictum erat. Quisque blandit tincidunt enim quis facilisis. Cras tristique ornare scelerisque. Integer dictum congue arcu, ut dignissim sem dapibus quis. Vivamus convallis at ante eget auctor. Mauris a mauris ipsum. Praesent iaculis nunc in sem mollis, ac ultricies massa ultrices. Morbi molestie egestas malesuada. Donec tincidunt gravida quam nec facilisis. Nullam accumsan sit amet ex nec lacinia. Etiam id dolor at nunc porttitor ullamcorper nec euismod lacus.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
