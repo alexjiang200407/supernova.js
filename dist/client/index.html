@@ -43,31 +43,49 @@
               padding-right: 5px;
             }
             
-            #content {
+            .content {
                 padding-right: 20px;
                 overflow-y: auto;
                 height: 100%;
             }
+
+            .tooltip {
+                position: relative;
+                cursor: pointer;
+            }
+
+            .tooltip::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #333;
+                color: #fff;
+                padding: 6px;
+                border-radius: 4px;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.2s;
+                font-size: 0.85rem;
+            }
+
+            .tooltip:hover::after {
+                opacity: 1;
+                visibility: visible;
+            }
           </style>
 
     </head>
-
+    <!-- LINK <a href="" class="has-text-primary is-underlined">Bitch</a> -->
     <body>
         <script type="module" src="bundle.js"></script>
         <div id="ui" class="box" data-theme="dark">
-            <div id="content">
-                <h1 id="stage-heading" class="title">Stage 1</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis convallis porttitor felis, sit amet pellentesque justo dapibus non. Vestibulum dolor lectus, condimentum a ex ac, facilisis eleifend risus. Quisque vitae nisi nec turpis rhoncus feugiat. Mauris scelerisque dolor lacinia, dapibus diam eu, egestas velit. Integer et ultricies nunc. Etiam quis ultricies risus, nec imperdiet diam. Maecenas massa erat, laoreet sit amet molestie ut, congue vitae arcu. Sed vestibulum molestie sem, sit amet consectetur lacus sollicitudin ac. Quisque scelerisque interdum pulvinar.
-    
-    Mauris purus metus, ullamcorper quis ultrices non, consectetur ut justo. Donec faucibus in diam vitae ultricies. Proin imperdiet efficitur sapien, eu viverra arcu tempus in. Integer tempor diam non justo porttitor, id bibendum augue rhoncus. Suspendisse potenti. Duis et lectus facilisis, bibendum turpis quis, ultrices dui. Vivamus ut tempus ex, sed tincidunt dolor. Curabitur id nisl pharetra, sagittis felis at, ullamcorper urna. Vestibulum vitae elit nulla. Aliquam nec sapien dictum, hendrerit tortor et, consectetur ligula. Curabitur vel mauris in diam vehicula vestibulum. Curabitur eu efficitur arcu. Phasellus sodales facilisis sapien nec venenatis.
-    
-    Sed at diam at leo feugiat efficitur. Integer posuere dictum consequat. Nullam dui tortor, accumsan ut gravida ac, mollis at sem. Curabitur lobortis, velit vitae ornare auctor, mauris sem tempor urna, a interdum dolor sem in diam. Praesent placerat porta orci feugiat facilisis. Fusce congue efficitur suscipit. Morbi rhoncus feugiat lorem, et fermentum ante congue in. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    
-    Sed viverra sapien magna, in condimentum tellus pretium vitae. Integer pulvinar ante magna, et elementum nulla bibendum eget. Integer pretium lorem vitae volutpat convallis. Sed porta a dolor id porttitor. Etiam et neque vel eros feugiat placerat. Sed accumsan nibh enim, quis pellentesque felis finibus sed. Proin eu velit at urna mattis posuere sed egestas est. Aenean est enim, auctor et justo sit amet, hendrerit elementum nisl.
-    
-    Donec sollicitudin egestas nunc eget aliquet. Sed rutrum, quam sit amet vestibulum interdum, erat tellus tempor sem, non viverra mi neque ac dui. Nulla venenatis, elit a sodales laoreet, ex felis vestibulum nunc, sit amet ullamcorper justo metus ut velit. Nulla sed dictum erat. Quisque blandit tincidunt enim quis facilisis. Cras tristique ornare scelerisque. Integer dictum congue arcu, ut dignissim sem dapibus quis. Vivamus convallis at ante eget auctor. Mauris a mauris ipsum. Praesent iaculis nunc in sem mollis, ac ultricies massa ultrices. Morbi molestie egestas malesuada. Donec tincidunt gravida quam nec facilisis. Nullam accumsan sit amet ex nec lacinia. Etiam id dolor at nunc porttitor ullamcorper nec euismod lacus.
-                </p>
+            <div class="content" id="stage-1">
+                <h1 id="stage-heading" class="title">What are supernovae?</h1>
+                <p>When a massive star—at least eight times the mass of the Sun—reaches the end of its life, it undergoes a spectacular explosion known as a supernova. Supernova.js will present a detailed timeline of the cosmic events before and after a supernova, highlighting its significance in shaping the universe.</p>
+                <p>We will begin by exploring the chemical processes that trigger a supernova. Next, we will analyze the explosion itself, identifying different types of supernovae and the energy they release. We will also examine cosmic enrichment and the formation of supernova remnants. Finally, we will discuss how a supernova leads to the transformation of a star into either a neutron star or a black hole.</p>
             </div>
         </div>
     </body>
