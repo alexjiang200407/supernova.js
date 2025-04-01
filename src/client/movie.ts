@@ -1,9 +1,9 @@
-import { initSceneEx } from "./scene";
+import { destroySceneEx, initSceneEx } from "./scene";
 import { Movie as Movie, SceneData } from "./types";
 import * as THREE from 'three'
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 
-export const newMovie = async (baseScene: SceneData): Promise<Movie> => {
+export const newMovie = async (baseScene: SceneData, ...otherScenes: SceneData[]): Promise<Movie> => {
   const w = window.innerWidth
   const h = window.innerHeight
   const renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -22,7 +22,8 @@ export const newMovie = async (baseScene: SceneData): Promise<Movie> => {
   }, false)
 
 
-  return {
+  const movie = {
+    animationId: undefined,
     w,
     h,
     camera,
@@ -30,18 +31,16 @@ export const newMovie = async (baseScene: SceneData): Promise<Movie> => {
     sceneIdx: 0,
     currentScene: await initSceneEx(baseScene, loader),
     loader,
-    scenes: [baseScene],
+    scenes: [baseScene, ...otherScenes],
   }
-}
 
-export const registerScene = (movie: Movie, sceneData: SceneData) => {
-  movie.scenes.push(sceneData)
+  return movie
 }
 
 export const play = (movie: Movie) => {
   const animate = (t: number = 0) => {
     const time = t * 0.0002;
-    requestAnimationFrame(animate);
+    movie.animationId = requestAnimationFrame(animate);
     
     movie.scenes[movie.sceneIdx].update(movie.currentScene, time);
     movie.renderer.render(movie.currentScene.base, movie.camera);
@@ -50,4 +49,29 @@ export const play = (movie: Movie) => {
   }
 
   animate();
+}
+
+export const nextScene = async (movie: Movie) => {
+  if (movie.sceneIdx == movie.scenes.length - 1)
+    return
+  destroySceneEx(movie.currentScene)
+  movie.sceneIdx++
+  movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader)
+}
+
+export const destroyMovie = (movie: Movie) => {
+  movie.renderer.dispose()
+  if (movie.animationId) {
+    // console.log("Canceling animation frame " + movie.animationId)
+    cancelAnimationFrame(movie.animationId);
+  }
+  destroySceneEx(movie.currentScene)
+  if (movie.renderer.domElement && movie.renderer.domElement.parentNode) {
+    movie.renderer.domElement.parentNode.removeChild(movie.renderer.domElement);
+  }
+
+  movie.currentScene.base = null as unknown as THREE.Scene;
+  movie.renderer = null as unknown as THREE.WebGLRenderer;
+  movie.camera = null as unknown as THREE.Camera;
+
 }

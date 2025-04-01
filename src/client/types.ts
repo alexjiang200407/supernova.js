@@ -21,6 +21,7 @@ export interface SceneEx {
 }
 
 export interface Movie {
+  animationId?: number;
   renderer: THREE.WebGLRenderer
   camera: THREE.Camera
   scenes: SceneData[]
