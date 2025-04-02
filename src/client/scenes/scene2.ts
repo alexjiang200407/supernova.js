@@ -1,13 +1,9 @@
 import * as THREE from 'three'
-import getSun from '../solarsystem/Star';
-import getPlanet from '../solarsystem/Planet';
-import getStarfield from '../starfield';
-import getNebula from '../solarsystem/Nebula';
 import { SceneData as Scene, SceneEx } from '../types';
-import getAsteroidBelt from '../solarsystem/Asteroids';
-import { randFloat, randInt } from 'three/src/math/MathUtils.js';
+import { nextScene } from '../movie';
+import { nextSlide } from '../scene';
 
-function initScene(scene: SceneEx) {
+const initScene = (scene: SceneEx) => {
 }
 
 const newScene2 = (): Scene => {
@@ -22,7 +18,9 @@ const newScene2 = (): Scene => {
     },
     update: (scene: SceneEx, time) => {
 
-    }
+    },
+    next: nextSlide,
+    paragraphPaths: ['text/slide2/1.html', 'text/slide2/2.html', 'text/slide2/3.html']
   }
 }
 

@@ -27,6 +27,11 @@ export const initSceneEx = async (data: SceneData, loader: OBJLoader): Promise<S
   const sceneEx: SceneEx = {
     base: new THREE.Scene,
     assets,
+    paragraphText: await Promise.all(
+      data.paragraphPaths.map(path => fetch(path)
+      .then(res => res.text())
+    )),
+    currentShot: 0
   }
 
   data.init(sceneEx)
@@ -48,4 +53,13 @@ function deleteObject(obj: any) {
   if (obj.geometry) { obj.geometry.dispose(); }
   if (obj.material) { obj.material.dispose(); }
   if (obj.texture) { obj.texture.dispose(); }
+}
+
+export const nextSlide = (scene: SceneEx, content: HTMLElement) => {
+  let hasNextSlide = scene.currentShot < scene.paragraphText.length;
+  if (hasNextSlide) {
+    content.innerHTML += scene.paragraphText[scene.currentShot]
+    scene.currentShot++
+  }
+  return hasNextSlide
 }

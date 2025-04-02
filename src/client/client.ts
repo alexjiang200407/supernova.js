@@ -1,8 +1,10 @@
-import { play, newMovie, nextScene, destroyMovie } from './movie'
+import { play, newMovie, next, destroyMovie } from './movie'
 import newScene1 from './scenes/scene1'
 import newScene2 from './scenes/scene2'
 
-newMovie(newScene1(), newScene2(), newScene2())
+const content = document.getElementById("text-content")
+
+newMovie(content as HTMLElement, newScene1(), newScene2())
 .then(m => {
   const unloadListener = () => {
     destroyMovie(m)
@@ -14,8 +16,9 @@ newMovie(newScene1(), newScene2(), newScene2())
 
   const nextButton = document.getElementById("next")
 
-  if (nextButton) {
-    nextButton.onclick = () => nextScene(m) 
+
+  if (nextButton && content) {
+    nextButton.onclick = async () => await next(m, content) 
   }
 
   return m

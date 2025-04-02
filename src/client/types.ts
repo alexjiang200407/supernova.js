@@ -6,18 +6,23 @@ export type CameraPathCallback = (scene: SceneEx, camera: THREE.Camera, time: nu
 export type CameraInitCallback = (camera: THREE.Camera) => void;
 export type SceneInitCallback = (scene: SceneEx) => void;
 export type UpdateCallback = (scene: SceneEx, time: number) => void;
+export type NextCallback = (scene: SceneEx, content: HTMLElement) => boolean;
 
 export interface SceneData {
   assets: string[]
+  paragraphPaths: string[]
   cameraMovement: CameraPathCallback
   init: SceneInitCallback
   cameraInit: CameraInitCallback
   update: UpdateCallback
+  next: NextCallback
 }
 
 export interface SceneEx {
   base: THREE.Scene
   assets: Map<string, THREE.Mesh>
+  paragraphText: string[]
+  currentShot: number
 }
 
 export interface Movie {

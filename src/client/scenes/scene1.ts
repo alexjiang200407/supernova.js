@@ -5,7 +5,7 @@ import getStarfield from '../starfield';
 import getNebula from '../solarsystem/Nebula';
 import { SceneData as Scene, SceneEx } from '../types';
 import getAsteroidBelt from '../solarsystem/Asteroids';
-import { randFloat, randInt } from 'three/src/math/MathUtils.js';
+import { nextSlide } from '../scene';
 
 function initScene(scene: SceneEx) {
   const solarSystem = new THREE.Group();
@@ -96,7 +96,9 @@ const newScene1 = (): Scene => {
       scene.base.children.forEach((child) => {
         child.userData.update?.(time);
       });
-    }
+    },
+    next: nextSlide,
+    paragraphPaths: ['text/slide1/1.html']
   }
 }
 

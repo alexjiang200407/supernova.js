@@ -3,7 +3,7 @@ import { Movie as Movie, SceneData } from "./types";
 import * as THREE from 'three'
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 
-export const newMovie = async (baseScene: SceneData, ...otherScenes: SceneData[]): Promise<Movie> => {
+export const newMovie = async (content: HTMLElement, baseScene: SceneData, ...otherScenes: SceneData[]): Promise<Movie> => {
   const w = window.innerWidth
   const h = window.innerHeight
   const renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -33,7 +33,7 @@ export const newMovie = async (baseScene: SceneData, ...otherScenes: SceneData[]
     loader,
     scenes: [baseScene, ...otherScenes],
   }
-
+  next(movie, content)
   return movie
 }
 
@@ -51,12 +51,14 @@ export const play = (movie: Movie) => {
   animate();
 }
 
-export const nextScene = async (movie: Movie) => {
+export const nextScene = async (movie: Movie, content: HTMLElement) => {
   if (movie.sceneIdx == movie.scenes.length - 1)
     return
   destroySceneEx(movie.currentScene)
   movie.sceneIdx++
   movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader)
+  content.innerHTML = ''
+  movie.scenes[movie.sceneIdx].next(movie.currentScene, content)
 }
 
 export const destroyMovie = (movie: Movie) => {
@@ -74,4 +76,10 @@ export const destroyMovie = (movie: Movie) => {
   movie.renderer = null as unknown as THREE.WebGLRenderer;
   movie.camera = null as unknown as THREE.Camera;
 
+}
+
+export const next = async (movie: Movie, content: HTMLElement) => {
+  if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content)) {
+    nextScene(movie, content)
+  }
 }
