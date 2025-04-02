@@ -6,6 +6,10 @@
         <title>supernova</title>
         <link rel="stylesheet" href="bulma.min.css">
         <style>
+            html {
+                font-size: 20px;
+            }
+
             body { margin: 0; overflow: hidden;  }
 
             main { margin: 0; overflow: hidden;  }
@@ -101,6 +105,19 @@
             #text-content {
                 width: 550px;
                 margin-bottom: 20px;
+            }
+
+            @keyframes fade-in {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            #text-content p {
+                animation: fade-in 0.4s ease-in;
             }
           </style>
 

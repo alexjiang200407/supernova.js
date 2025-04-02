@@ -1,11 +1,11 @@
 import * as THREE from 'three'
-import getSun from '../solarsystem/Star';
+import newSun from '../solarsystem/Star';
 import getPlanet from '../solarsystem/Planet';
 import getStarfield from '../starfield';
 import getNebula from '../solarsystem/Nebula';
 import { SceneData as Scene, SceneEx } from '../types';
 import getAsteroidBelt from '../solarsystem/Asteroids';
-import { nextSlide } from '../scene';
+import { nextSlide, rotateCamera } from '../scene';
 
 function initScene(scene: SceneEx) {
   const solarSystem = new THREE.Group();
@@ -17,7 +17,7 @@ function initScene(scene: SceneEx) {
   
   scene.base.add(solarSystem);
 
-  const sun = getSun()
+  const sun = newSun()
   solarSystem.add(sun)
 
   const mercury = getPlanet({ size: 0.05, distance: 1.25, img: 'mercury.png' });
@@ -75,16 +75,14 @@ function initScene(scene: SceneEx) {
   })
   scene.base.add(nebula)
   scene.base.userData.cameraDistance = 5
+  scene.base.userData.oldCameraDistance = scene.base.userData.cameraDistance
+  scene.planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, asteroidBelt]
+  scene.star = sun
 }
 
 const newScene1 = (): Scene => {
   return {
-    cameraMovement: (scene: SceneEx, camera: THREE.Camera, time: number): void => {
-      camera.position.x = Math.cos(time * 0.75) * scene.base.userData.cameraDistance
-      camera.position.y = Math.cos(time * 0.75)
-      camera.position.z = Math.sin(time * 0.75) * scene.base.userData.cameraDistance
-      camera.lookAt(0, 0, 0)
-    },
+    cameraMovement: rotateCamera,
     init: initScene,
     assets: ['Rock1', 'Rock2', 'Rock3'].map(s => `./meshes/rocks/${s}.obj`),
     cameraInit: (camera: THREE.Camera): void => {
@@ -98,7 +96,8 @@ const newScene1 = (): Scene => {
       });
     },
     next: nextSlide,
-    paragraphPaths: ['text/slide1/1.html']
+    paragraphPaths: ['text/slide1/1.html'],
+    handleShot: () => {}
   }
 }
 

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { getFresnelMat } from "../fx/fresnelMat";
 import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js';
+import gsap from "gsap";
 
 function getCorona() {
   const radius = 0.6;
@@ -33,7 +34,7 @@ function getCorona() {
   return mesh;
 }
 
-const getSun = (): THREE.Object3D<THREE.Object3DEventMap> => {
+const newSun = (): THREE.Mesh => {
   const sunMat = new THREE.MeshStandardMaterial({
     emissive: 0x2e81db,
   });
@@ -54,6 +55,31 @@ const getSun = (): THREE.Object3D<THREE.Object3DEventMap> => {
     sun.rotation.y = t;
     coronaMesh.userData.update(t)
   };
+
+  sun.userData.material = sunMat
+
   return sun;
 }
-export default getSun;
+
+export const startRedGiant = (sun: THREE.Mesh) => {
+  if (sun) {
+    // sun.material
+
+    gsap.to(sun.userData.material.emissive, {
+      r: 0.8, g: 0.1, b: 0,
+      duration: 6,
+      repeat: 0,
+      yoyo: false
+    });
+
+    gsap.to(sun.scale, { 
+      x: 7, y: 7, z: 7, // Target scale (twice the size)
+      duration: 6, // Expand over 3 seconds
+      repeat: 0, // Loop infinitely
+      yoyo: false, // Expand and shrink back
+      ease: "power1.inOut" // Smooth transition
+    });
+  }
+}
+
+export default newSun;

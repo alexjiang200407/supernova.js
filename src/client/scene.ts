@@ -21,17 +21,34 @@ async function loadAssets(loader: OBJLoader, paths: string[]) {
 }
 
 
-export const initSceneEx = async (data: SceneData, loader: OBJLoader): Promise<SceneEx> => {
+export const initSceneEx = async (data: SceneData, loader: OBJLoader, currentScene?: SceneEx): Promise<SceneEx> => {
   const assets = await loadAssets(loader, data.assets);
 
-  const sceneEx: SceneEx = {
-    base: new THREE.Scene,
-    assets,
-    paragraphText: await Promise.all(
-      data.paragraphPaths.map(path => fetch(path)
-      .then(res => res.text())
-    )),
-    currentShot: 0
+  let sceneEx
+  
+  if (currentScene) {
+    sceneEx = {
+      ...currentScene,
+      assets,
+      paragraphText: await Promise.all(
+        data.paragraphPaths.map(path => fetch(path)
+          .then(res => res.text())
+        )),
+      currentShot: 0,
+    }
+  } else {
+    sceneEx = {
+      base: new THREE.Scene,
+      assets,
+      paragraphText: await Promise.all(
+        data.paragraphPaths.map(path => fetch(path)
+          .then(res => res.text())
+        )),
+      currentShot: 0,
+      planets: [],
+      star: undefined
+    }
+  
   }
 
   data.init(sceneEx)
@@ -44,7 +61,8 @@ export const destroySceneEx = (sceneEx: SceneEx): void => {
   deleteObject(sceneEx.base)
 }
 
-function deleteObject(obj: any) {
+export const deleteObject = (obj: any) => {
+  console.log(obj)
   while (obj.children.length > 0) {
     deleteObject(obj.children[0])
     obj.remove(obj.children[0]);
@@ -58,8 +76,24 @@ function deleteObject(obj: any) {
 export const nextSlide = (scene: SceneEx, content: HTMLElement) => {
   let hasNextSlide = scene.currentShot < scene.paragraphText.length;
   if (hasNextSlide) {
-    content.innerHTML += scene.paragraphText[scene.currentShot]
+    const tempDiv = document.createElement("div")
+    tempDiv.innerHTML = scene.paragraphText[scene.currentShot]
+    while (tempDiv.firstChild) {
+      content.appendChild(tempDiv.firstChild);  // Move children one by one
+    }
     scene.currentShot++
   }
   return hasNextSlide
+}
+
+export const getSun = (scene: SceneEx): THREE.Mesh => {
+  return scene.base.userData.sun
+}
+
+export const rotateCamera = (scene: SceneEx, camera: THREE.Camera, time: number): void => {
+  scene.base.userData.oldCameraDistance = Math.min(scene.base.userData.oldCameraDistance + 0.05, scene.base.userData.cameraDistance)
+  camera.position.x = Math.cos(time * 0.75) * scene.base.userData.oldCameraDistance
+  camera.position.y = Math.cos(time * 0.75)
+  camera.position.z = Math.sin(time * 0.75) * scene.base.userData.oldCameraDistance
+  camera.lookAt(0, 0, 0)
 }

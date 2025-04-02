@@ -7,6 +7,7 @@ export type CameraInitCallback = (camera: THREE.Camera) => void;
 export type SceneInitCallback = (scene: SceneEx) => void;
 export type UpdateCallback = (scene: SceneEx, time: number) => void;
 export type NextCallback = (scene: SceneEx, content: HTMLElement) => boolean;
+export type HandleShotCallback = (scene: SceneEx, shotIdx: number) => void;
 
 export interface SceneData {
   assets: string[]
@@ -16,6 +17,7 @@ export interface SceneData {
   cameraInit: CameraInitCallback
   update: UpdateCallback
   next: NextCallback
+  handleShot: HandleShotCallback
 }
 
 export interface SceneEx {
@@ -23,6 +25,8 @@ export interface SceneEx {
   assets: Map<string, THREE.Mesh>
   paragraphText: string[]
   currentShot: number
+  planets: THREE.Object3D<THREE.Object3DEventMap>[]
+  star?: THREE.Mesh
 }
 
 export interface Movie {

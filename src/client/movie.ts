@@ -54,9 +54,8 @@ export const play = (movie: Movie) => {
 export const nextScene = async (movie: Movie, content: HTMLElement) => {
   if (movie.sceneIdx == movie.scenes.length - 1)
     return
-  destroySceneEx(movie.currentScene)
   movie.sceneIdx++
-  movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader)
+  movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader, movie.currentScene)
   content.innerHTML = ''
   movie.scenes[movie.sceneIdx].next(movie.currentScene, content)
 }
@@ -82,4 +81,5 @@ export const next = async (movie: Movie, content: HTMLElement) => {
   if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content)) {
     nextScene(movie, content)
   }
+  movie.scenes[movie.sceneIdx].handleShot(movie.currentScene, movie.currentScene.currentShot)
 }
