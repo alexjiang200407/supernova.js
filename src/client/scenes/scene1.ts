@@ -96,7 +96,7 @@ const newScene1 = (): Scene => {
       });
     },
     next: nextSlide,
-    paragraphPaths: ['text/slide1/1.html'],
+    paragraphPaths: [1, 2, 3].map(n => `text/slide1/${n}.html`),
     handleShot: () => {}
   }
 }

@@ -89,6 +89,7 @@
             .chevron {
                 cursor: pointer;
                 transition: transform 0.3s ease-in-out;
+                user-select: none;
             }
 
             .rotated {
@@ -116,7 +117,7 @@
                 }
             }
 
-            #text-content p {
+            #text-content * {
                 animation: fade-in 0.4s ease-in;
             }
           </style>
@@ -127,14 +128,13 @@
         <script type="module" src="bundle.js"></script>
         <div id="ui" class="box is-flex is-align-items-center is-justify-content-center" data-theme="dark">
             <div id="chevron" class="chevron tooltip" data-tooltip="Collapse UI">▶</div>
-            <div class="content" id="collapsible">
+            <div class='content' id="collapsible">
                 <div id="text-content">
 
                 </div>
                 <button class="button is-primary" id="next" >Next</button>
             </div>
         </div>
-
         <script>
             document.getElementById("chevron").addEventListener("click", function () {
                 const collapsible = document.getElementById("collapsible");

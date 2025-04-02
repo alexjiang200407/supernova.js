@@ -63,7 +63,6 @@ export const nextScene = async (movie: Movie, content: HTMLElement) => {
 export const destroyMovie = (movie: Movie) => {
   movie.renderer.dispose()
   if (movie.animationId) {
-    // console.log("Canceling animation frame " + movie.animationId)
     cancelAnimationFrame(movie.animationId);
   }
   destroySceneEx(movie.currentScene)
@@ -80,6 +79,7 @@ export const destroyMovie = (movie: Movie) => {
 export const next = async (movie: Movie, content: HTMLElement) => {
   if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content)) {
     nextScene(movie, content)
+    return
   }
   movie.scenes[movie.sceneIdx].handleShot(movie.currentScene, movie.currentScene.currentShot)
 }
