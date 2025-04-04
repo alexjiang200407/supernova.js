@@ -8,7 +8,7 @@ import getAsteroidBelt from '../solarsystem/Asteroids';
 import { nextSlide, rotateCamera } from '../scene';
 import { range } from '../util';
 
-function initScene(scene: SceneEx) {
+function initScene(scene: SceneEx, camera: THREE.Camera) {
   const solarSystem = new THREE.Group();
   solarSystem.userData.update = (t: number) => {
     solarSystem.children.forEach((child) => {
@@ -18,7 +18,7 @@ function initScene(scene: SceneEx) {
   
   scene.base.add(solarSystem);
 
-  const sun = newSun()
+  const sun = newSun(camera, scene.base)
   solarSystem.add(sun)
 
   const mercury = getPlanet({ size: 0.05, distance: 1.25, img: 'mercury.png' });

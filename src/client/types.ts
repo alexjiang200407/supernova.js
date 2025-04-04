@@ -4,7 +4,7 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 
 export type CameraPathCallback = (scene: SceneEx, camera: THREE.Camera, time: number) => void;
 export type CameraInitCallback = (camera: THREE.Camera) => void;
-export type SceneInitCallback = (scene: SceneEx) => void;
+export type SceneInitCallback = (scene: SceneEx, camera: THREE.Camera) => void;
 export type UpdateCallback = (scene: SceneEx, time: number) => void;
 export type NextCallback = (scene: SceneEx, content: HTMLElement) => boolean;
 export type HandleShotCallback = (scene: SceneEx, shotIdx: number) => void;

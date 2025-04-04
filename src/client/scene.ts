@@ -21,7 +21,7 @@ async function loadAssets(loader: OBJLoader, paths: string[]) {
 }
 
 
-export const initSceneEx = async (data: SceneData, loader: OBJLoader, currentScene?: SceneEx): Promise<SceneEx> => {
+export const initSceneEx = async (data: SceneData, loader: OBJLoader, camera: THREE.Camera, currentScene?: SceneEx,): Promise<SceneEx> => {
   const assets = await loadAssets(loader, data.assets);
 
   let sceneEx
@@ -51,7 +51,7 @@ export const initSceneEx = async (data: SceneData, loader: OBJLoader, currentSce
   
   }
 
-  data.init(sceneEx)
+  data.init(sceneEx, camera)
 
   return sceneEx
 }
@@ -62,7 +62,6 @@ export const destroySceneEx = (sceneEx: SceneEx): void => {
 }
 
 export const deleteObject = (obj: any) => {
-  console.log(obj)
   while (obj.children.length > 0) {
     deleteObject(obj.children[0])
     obj.remove(obj.children[0]);

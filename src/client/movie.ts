@@ -29,7 +29,7 @@ export const newMovie = async (content: HTMLElement, baseScene: SceneData, ...ot
     camera,
     renderer,
     sceneIdx: 0,
-    currentScene: await initSceneEx(baseScene, loader),
+    currentScene: await initSceneEx(baseScene, loader, camera),
     loader,
     scenes: [baseScene, ...otherScenes],
   }
@@ -55,7 +55,7 @@ export const nextScene = async (movie: Movie, content: HTMLElement) => {
   if (movie.sceneIdx == movie.scenes.length - 1)
     return
   movie.sceneIdx++
-  movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader, movie.currentScene)
+  movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader, movie.camera, movie.currentScene)
   content.innerHTML = ''
   movie.scenes[movie.sceneIdx].next(movie.currentScene, content)
 }

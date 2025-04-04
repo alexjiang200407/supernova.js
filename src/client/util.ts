@@ -13,3 +13,10 @@ export const range = (start: number, end: number, step: number = 1) => Array.fro
 
 export const zip = <T extends unknown[][]>(...arrays: T) =>
   arrays[0].map((_, i) => arrays.map(arr => arr[i]) as { [K in keyof T]: T[K][number] });
+
+
+export const sleep = async (ms: number): Promise<void> => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve();
+  }, ms);
+});

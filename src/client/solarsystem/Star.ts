@@ -4,6 +4,7 @@ import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js';
 import gsap from "gsap";
 import { applyToMaterial, zip } from '../util';
 import getParticles from '../fx/particles';
+import { getParticleSystem } from '../fx/getParticleSystem';
 
 function getCorona() {
   const radius = 0.6;
@@ -38,7 +39,7 @@ function getCorona() {
   return mesh;
 }
 
-const newSun = (): THREE.Mesh => {
+const newSun = (camera: THREE.Camera, scene: THREE.Scene): THREE.Mesh => {
   const sunMat = new THREE.MeshStandardMaterial({
     emissive: 0x2e81db,
     transparent: true,
@@ -123,16 +124,26 @@ const newSun = (): THREE.Mesh => {
   sun.userData.update = (t: number) => {
     sun.rotation.y = t;
     if (coronaMesh.userData.update) coronaMesh.userData.update(t);
+
+    if (sun.userData.doParticleSystem)
+      sun.userData.particleSystem.update(0.05)
+
   };
 
   
   sun.userData.material = sunMat;
   sun.userData.corona = coronaMesh;
   sun.userData.rim = rimMesh;
-
-
+  sun.userData.core = coreMesh
+  sun.userData.particleSystem = getParticleSystem({
+    camera: camera,
+    emitter: sun,
+    parent: scene,
+    rate: 50,
+    texture: 'textures/circle.png',
+    radius: 1
+  })
   sun.userData.layerParticles = layerMeshParticles
-
   return sun;
 };
 
@@ -220,5 +231,22 @@ export const hideLayerMesh = (idx: number, star: THREE.Mesh, reversed: boolean =
   })
 
 }
+
+export const contractCore = (star: THREE.Mesh, scale: number) => {
+  gsap.to(star.userData.core.scale, { 
+    x: scale, y: scale, z: scale,
+    duration: 1.2, 
+    repeat: 0, 
+    yoyo: false,
+    ease: "power1.inOut",
+    overwrite: true
+  });
+}
+
+
+export const startParticleSystem = (star: THREE.Mesh) => {
+  star.userData.doParticleSystem = true
+}
+
 
 export default newSun;
