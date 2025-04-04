@@ -5,7 +5,7 @@ import { startRedGiant } from '../solarsystem/Star';
 import { range } from '../util';
 
 const handleShot = (scene: SceneEx, shotIdx: number) => {
-  if (shotIdx === 5) {
+  if (shotIdx === 6) {
     if (scene.star)
       startRedGiant(scene.star)
     
@@ -30,7 +30,7 @@ const newScene3 = (): Scene => {
       });
     },
     next: nextSlide,
-    paragraphPaths: range(0, 4).map(n => `text/slide3/${n}.html`),
+    paragraphPaths: range(0, 5).map(n => `text/slide3/${n}.html`),
     handleShot
   }
 }
