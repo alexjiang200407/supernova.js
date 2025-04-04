@@ -5,6 +5,8 @@ base_name=$1
 slide_name=$2
 extension=".html"
 
+mkdir -p "dist/client/text/$slide_name/"
+
 # Check if the file with the given name already exists
 if [[ -f "dist/client/text/$slide_name/$base_name$extension" ]]; then
   # If the file exists, start renaming the existing files
@@ -23,4 +25,5 @@ fi
 
 # Create the new file at the original position
 touch "dist/client/text/$slide_name/$base_name$extension"
+echo "<!-- <span class="has-text-weight-bold"></span> -->" >> "dist/client/text/$slide_name/$base_name$extension"
 echo "File $base_name$extension created."
