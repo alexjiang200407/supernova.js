@@ -6,6 +6,7 @@ import getNebula from '../solarsystem/Nebula';
 import { SceneData as Scene, SceneEx } from '../types';
 import getAsteroidBelt from '../solarsystem/Asteroids';
 import { nextSlide, rotateCamera } from '../scene';
+import { range } from '../util';
 
 function initScene(scene: SceneEx) {
   const solarSystem = new THREE.Group();
@@ -96,7 +97,7 @@ const newScene1 = (): Scene => {
       });
     },
     next: nextSlide,
-    paragraphPaths: [1, 2, 3].map(n => `text/slide1/${n}.html`),
+    paragraphPaths: range(1, 7).map(n => `text/slide1/${n}.html`),
     handleShot: () => {}
   }
 }

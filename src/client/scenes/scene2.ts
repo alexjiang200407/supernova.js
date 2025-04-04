@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { SceneData as Scene, SceneEx } from '../types';
 import { nextSlide, rotateCamera } from '../scene';
+import { range } from '../util';
 
 const newScene2 = (): Scene => {
   return {
@@ -18,7 +19,7 @@ const newScene2 = (): Scene => {
       });
     },
     next: nextSlide,
-    paragraphPaths: ['text/slide2/1.html', 'text/slide2/2.html'],
+    paragraphPaths: range(0, 3).map(n => `text/slide2/${n}.html`),
     handleShot: () => {}
   }
 }

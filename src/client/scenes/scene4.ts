@@ -1,20 +1,25 @@
 import * as THREE from 'three'
 import { SceneData as Scene, SceneEx } from '../types';
-import { nextSlide, rotateCamera } from '../scene';
-import { startRedGiant } from '../solarsystem/Star';
+import { deleteObject, nextSlide, rotateCamera } from '../scene';
+import { hideLayerMesh, hideOuter } from '../solarsystem/Star';
 import { range } from '../util';
 
 const handleShot = (scene: SceneEx, shotIdx: number) => {
-  if (shotIdx === 5) {
-    if (scene.star)
-      startRedGiant(scene.star)
+  if (shotIdx === 2) {
+    scene.planets.forEach(p => deleteObject(p))
+    scene.planets = []
     
-    scene.base.userData.cameraDistance *= 3
+    if (scene.star) {
+      hideOuter(scene.star)
+    }
+  } else if (shotIdx >= 4 && scene.star) {
+    hideLayerMesh(shotIdx - 4, scene.star)
+    scene.base.userData.cameraDistance *= 0.9
   }
 }
 
 
-const newScene3 = (): Scene => {
+const newScene4 = (): Scene => {
   return {
     cameraMovement: rotateCamera,
     init: () => {},
@@ -30,10 +35,10 @@ const newScene3 = (): Scene => {
       });
     },
     next: nextSlide,
-    paragraphPaths: range(0, 4).map(n => `text/slide3/${n}.html`),
+    paragraphPaths: range(4, 11).map(n => `text/slide4/${n}.html`),
     handleShot
   }
 }
 
 
-export default newScene3
+export default newScene4

@@ -2,10 +2,11 @@ import { play, newMovie, next, destroyMovie } from './movie'
 import newScene1 from './scenes/scene1'
 import newScene2 from './scenes/scene2';
 import newScene3 from './scenes/scene3';
+import newScene4 from './scenes/scene4';
 
 const content = document.getElementById("text-content")
 
-newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3())
+newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene4())
 .then(m => {
   const unloadListener = () => {
     destroyMovie(m)
@@ -21,7 +22,7 @@ newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3())
   if (nextButton && content && scrollbar) {
     nextButton.onclick = async () => {
       await next(m, content)
-      scrollbar.scrollTop = scrollbar.scrollHeight;
+      scrollbar.scrollTo({behavior: 'smooth', left: 0, top: scrollbar.scrollHeight});
     } 
   }
 

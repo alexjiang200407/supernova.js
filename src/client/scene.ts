@@ -91,7 +91,15 @@ export const getSun = (scene: SceneEx): THREE.Mesh => {
 }
 
 export const rotateCamera = (scene: SceneEx, camera: THREE.Camera, time: number): void => {
-  scene.base.userData.oldCameraDistance = Math.min(scene.base.userData.oldCameraDistance + 0.05, scene.base.userData.cameraDistance)
+
+  const cameraDistanceDelta = scene.base.userData.cameraDistance - scene.base.userData.oldCameraDistance
+
+  if (cameraDistanceDelta < -0.05) {
+    scene.base.userData.oldCameraDistance -= 0.05
+  } else if (cameraDistanceDelta > 0.05) {
+    scene.base.userData.oldCameraDistance += 0.05
+  }
+
   camera.position.x = Math.cos(time * 0.75) * scene.base.userData.oldCameraDistance
   camera.position.y = Math.cos(time * 0.75)
   camera.position.z = Math.sin(time * 0.75) * scene.base.userData.oldCameraDistance
