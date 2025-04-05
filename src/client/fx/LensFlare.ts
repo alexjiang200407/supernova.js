@@ -1,48 +1,8 @@
-import * as THREE from 'three';
-import { easing } from 'maath';
-
-interface LensFlareParams {
-  enabled: Boolean;
-  lensPosition: THREE.Vector3;
-  opacity: number;
-  colorGain: THREE.Color;
-  starPoints: number;
-  glareSize: number;
-  flareSize: number;
-  flareSpeed: number;
-  flareShape: number;
-  haloScale: number;
-  animated: Boolean;
-  anamorphic: Boolean;
-  secondaryGhosts: Boolean;
-  starBurst: Boolean;
-  ghostScale: number;
-  aditionalStreaks: Boolean;
-  followMouse: Boolean;
-}
-
-export let LensFlareParams: LensFlareParams = {
-  enabled: true,
-  lensPosition: new THREE.Vector3(0, 0, 1),
-  opacity: 0.8,
-  colorGain: new THREE.Color(95, 12, 10),
-  starPoints: 5.0,
-  glareSize: 0.55,
-  flareSize: 0.004,
-  flareSpeed: 0.4,
-  flareShape: 1.2,
-  haloScale: 0.5,
-  animated: true,
-  anamorphic: false,
-  secondaryGhosts: true,
-  starBurst: true,
-  ghostScale: 0.3,
-  aditionalStreaks: true,
-  followMouse: false,
-};
+import { easing } from 'maath'
+import * as THREE from 'three'
 
 export function LensFlareEffect(
-  enabled?: Boolean,
+  enabled?: boolean,
   lensPosition?: THREE.Vector3,
   opacity?: number,
   colorGain?: THREE.Color,
@@ -52,15 +12,15 @@ export function LensFlareEffect(
   flareSpeed?: number,
   flareShape?: number,
   haloScale?: number,
-  animated?: Boolean,
-  anamorphic?: Boolean,
-  secondaryGhosts?: Boolean,
-  starBurst?: Boolean,
+  animated?: boolean,
+  anamorphic?: boolean,
+  secondaryGhosts?: boolean,
+  starBurst?: boolean,
   ghostScale?: number,
-  aditionalStreaks?: Boolean,
-  followMouse?: Boolean
+  aditionalStreaks?: boolean,
+  followMouse?: boolean,
 ): THREE.Mesh {
-  LensFlareParams = {
+  const lensFlareParams = {
     enabled: enabled !== undefined ? enabled : false,
     lensPosition: lensPosition !== undefined ? lensPosition : new THREE.Vector3(25, 2, -40),
     opacity: opacity !== undefined ? opacity : 0.6,
@@ -78,38 +38,38 @@ export function LensFlareEffect(
     ghostScale: ghostScale !== undefined ? ghostScale : 0,
     aditionalStreaks: aditionalStreaks !== undefined ? aditionalStreaks : true,
     followMouse: followMouse !== undefined ? followMouse : false,
-  };
+  }
 
-  const clock = new THREE.Clock();
-  const viewport = new THREE.Vector4();
-  const oldOpacity = LensFlareParams.opacity;
+  const clock = new THREE.Clock()
+  const viewport = new THREE.Vector4()
+  const oldOpacity = lensFlareParams.opacity
 
-  let internalOpacity = oldOpacity;
+  const internalOpacity = oldOpacity
 
   const lensFlareMaterial = new THREE.ShaderMaterial({
     uniforms: {
       iTime: { value: 0 },
       iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
       lensPosition: { value: new THREE.Vector2(0, 0) },
-      enabled: { value: LensFlareParams.enabled },
-      colorGain: { value: LensFlareParams.colorGain },
-      starPoints: { value: LensFlareParams.starPoints },
-      glareSize: { value: LensFlareParams.glareSize },
-      flareSize: { value: LensFlareParams.flareSize },
-      flareSpeed: { value: LensFlareParams.flareSpeed },
-      flareShape: { value: LensFlareParams.flareShape },
-      haloScale: { value: LensFlareParams.haloScale },
+      enabled: { value: lensFlareParams.enabled },
+      colorGain: { value: lensFlareParams.colorGain },
+      starPoints: { value: lensFlareParams.starPoints },
+      glareSize: { value: lensFlareParams.glareSize },
+      flareSize: { value: lensFlareParams.flareSize },
+      flareSpeed: { value: lensFlareParams.flareSpeed },
+      flareShape: { value: lensFlareParams.flareShape },
+      haloScale: { value: lensFlareParams.haloScale },
       opacity: { value: internalOpacity },
-      animated: { value: LensFlareParams.animated },
-      anamorphic: { value: LensFlareParams.anamorphic },
-      secondaryGhosts: { value: LensFlareParams.secondaryGhosts },
-      starBurst: { value: LensFlareParams.starBurst },
-      ghostScale: { value: LensFlareParams.ghostScale },
-      aditionalStreaks: { value: LensFlareParams.aditionalStreaks },
-      followMouse: { value: LensFlareParams.followMouse },
+      animated: { value: lensFlareParams.animated },
+      anamorphic: { value: lensFlareParams.anamorphic },
+      secondaryGhosts: { value: lensFlareParams.secondaryGhosts },
+      starBurst: { value: lensFlareParams.starBurst },
+      ghostScale: { value: lensFlareParams.ghostScale },
+      aditionalStreaks: { value: lensFlareParams.aditionalStreaks },
+      followMouse: { value: lensFlareParams.followMouse },
       lensDirtTexture: { value: new THREE.TextureLoader().load('/textures/lensDirtTexture.png') },
     },
-    /*GLSL */
+    /* GLSL */
     fragmentShader: `
 
     // Based on https://www.shadertoy.com/view/4sX3Rs
@@ -388,7 +348,7 @@ export function LensFlareEffect(
         float d = sin(clamp(pow(length(vec2(0.5) - p) * 0.5 + haloScale /2., 5.0), 0.0, 1.0) * 3.14159);
         vec3 c = vec3(d) * vec3(fbm(cp.xy * 16.0) * fbm(cp.zw * 9.0) * max(max(max(max(0.5, sin(a * 1.0)), sin(a * 3.0) * 0.8), sin(a * 7.0) * 0.8), sin(a * 9.0) * 10.6));
         c *= vec3(mix(2.0, (sin(length(pp.xy) * 256.0) * 0.5) + 0.5, sin((clamp((length(pp.xy) - 0.875) / 0.1, 0.0, 1.0) + 0.0) * 2.0 * 3.14159) * 1.5) + 0.5) * 0.3275;
-        return vec4(vec3(c * 1.0), d);	
+        return vec4(vec3(c * 1.0), d);
     }
 
     vec4 getLensDirt(vec2 p){
@@ -402,7 +362,7 @@ export function LensFlareEffect(
         o += vec3(max(fbm(p * 8.0) - 0.75, 0.0)) * 1.0;
         o += vec3(max(fbm(p * 16.0) - 0.75, 0.0)) * 0.75;
         o += vec3(max(fbm(p * 64.0) - 0.75, 0.0)) * 0.5;
-        return vec4(clamp(o, vec3(0.15), vec3(1.0)), 1.0);	
+        return vec4(clamp(o, vec3(0.15), vec3(1.0)), 1.0);
     }
 
     vec4 textureLimited(sampler2D tex, vec2 texCoord){
@@ -422,7 +382,7 @@ export function LensFlareEffect(
 
     vec4 getStartBurst(){
         vec2 aspectTexCoord = vec2(1.0) - (((vTexCoord - vec2(0.5)) * vec2(1.0)) + vec2(0.5)); 
-        vec2 texCoord = vec2(1.0) - vTexCoord; 
+        vec2 texCoord=vec2(1.0)-vTexCoord;
         vec2 ghostVec = (vec2(0.5) - texCoord) * uDispersal - lensPosition;
         vec2 ghostVecAspectNormalized = normalize(ghostVec * vec2(1.0)) * vec2(1.0);
         vec2 haloVec = normalize(ghostVec) * uHaloWidth;
@@ -515,42 +475,37 @@ export function LensFlareEffect(
     depthTest: false,
     blending: THREE.AdditiveBlending,
     name: 'LensFlareShader',
-  });
-
-  lensFlareMaterial.onBeforeRender = function (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera) {
-    const elapsedTime = clock.getElapsedTime();
-
-    renderer.getCurrentViewport(viewport);
-    lensFlareContainer.lookAt(camera.position);
-
-    lensFlareMaterial.uniforms.iResolution.value.set(viewport.z, viewport.w);
-
-    if (lensFlareMaterial.uniforms.followMouse.value === true) {
-      lensFlareMaterial.uniforms.lensPosition.value.set(mouse.x, mouse.y);
-    } else {
-
-      lensFlareMaterial.uniforms.lensPosition.value.set(0, 0);
-    }
-
-    lensFlareMaterial.uniforms.iTime.value = elapsedTime;
-    easing.damp(lensFlareMaterial.uniforms.opacity, 'value', internalOpacity, 0.007, clock.getDelta());
-  };
+  })
 
   /**
    * Mouse
    */
-  const mouse = new THREE.Vector2();
+  const mouse = new THREE.Vector2()
 
   window.addEventListener('mousemove', (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  });
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+  })
 
-  const lensFlareContainer = new THREE.Mesh(new THREE.PlaneGeometry(2, 2, 1, 1), lensFlareMaterial);
+  const lensFlareContainer = new THREE.Mesh(new THREE.PlaneGeometry(2, 2, 1, 1), lensFlareMaterial)
 
   lensFlareContainer.userData.update = (t: number) => {
     lensFlareContainer.rotation.y = t
   }
 
-  return lensFlareContainer;
+  lensFlareMaterial.onBeforeRender = function (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera) {
+    const elapsedTime = clock.getElapsedTime()
+
+    renderer.getCurrentViewport(viewport)
+    lensFlareContainer.lookAt(camera.position)
+
+    lensFlareMaterial.uniforms.iResolution.value.set(viewport.z, viewport.w)
+
+    lensFlareMaterial.uniforms.lensPosition.value.set(0, 0)
+
+    lensFlareMaterial.uniforms.iTime.value = elapsedTime
+    easing.damp(lensFlareMaterial.uniforms.opacity, 'value', internalOpacity, 0.007, clock.getDelta())
+  }
+
+  return lensFlareContainer
 }

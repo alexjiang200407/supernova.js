@@ -1,5 +1,6 @@
 import type { SceneData as Scene, SceneEx } from '../types'
 import * as THREE from 'three'
+import { LensFlareEffect } from '../fx/LensFlare'
 import { nextSlide, rotateCamera } from '../scene'
 import getAsteroidBelt from '../solarsystem/Asteroids'
 import getNebula from '../solarsystem/Nebula'
@@ -7,7 +8,6 @@ import getPlanet from '../solarsystem/Planet'
 import newSun from '../solarsystem/Star'
 import getStarfield from '../starfield'
 import { range } from '../util'
-import { LensFlareEffect, LensFlareParams } from '../fx/LensFlare'
 
 function initScene(scene: SceneEx, camera: THREE.Camera) {
   const solarSystem = new THREE.Group()
@@ -80,7 +80,7 @@ function initScene(scene: SceneEx, camera: THREE.Camera) {
   scene.star = sun
   const lensFlareEffect = LensFlareEffect()
   scene.base.add(lensFlareEffect)
-  
+
   scene.lensFlareFx = lensFlareEffect
 }
 

@@ -9,8 +9,6 @@ function handleShot(scene: SceneEx, shotIdx: number) {
     toggleParticleSystem(scene.star, false)
     explode(scene.star, scene)
   }
-  else if (shotIdx === 2) {
-  }
 }
 
 function newScene6(): Scene {

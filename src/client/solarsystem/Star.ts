@@ -1,13 +1,13 @@
+import type { SceneEx } from '../types'
 import gsap from 'gsap'
 import * as THREE from 'three'
 import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js'
 import { getFresnelMat } from '../fx/fresnelMat'
 import { getParticleSystem } from '../fx/getParticleSystem'
 import getParticles from '../fx/particles'
-import { applyToMaterial, zip } from '../util'
-import { SceneEx } from '../types'
 import createStellarRemnant from '../fx/stellarRemnant'
 import { deleteObject } from '../scene'
+import { applyToMaterial, zip } from '../util'
 import newNeutronStar from './NeutronStar'
 
 function getCorona() {
@@ -244,8 +244,7 @@ export function contractCore(star: THREE.Mesh, scale: number) {
   })
 }
 
-
-export const explode = (mesh: THREE.Mesh, scene: SceneEx) => {
+export function explode(mesh: THREE.Mesh, scene: SceneEx) {
   const { remnantMesh, remnantMaterial } = createStellarRemnant()
   scene.base.add(remnantMesh)
   gsap.timeline()
@@ -276,7 +275,6 @@ export const explode = (mesh: THREE.Mesh, scene: SceneEx) => {
       }
     })
 }
-
 
 export function toggleParticleSystem(star: THREE.Mesh, enabled = true) {
   star.userData.particleSystem.state.enabled = enabled

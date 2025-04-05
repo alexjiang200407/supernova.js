@@ -1,9 +1,8 @@
 import type { Movie, SceneData } from './types'
+import Stats from 'stats.js'
 import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { destroySceneEx, initSceneEx } from './scene'
-import Stats from 'stats.js'
-
 
 export async function newMovie(content: HTMLElement, baseScene: SceneData, ...otherScenes: SceneData[]): Promise<Movie> {
   const w = window.innerWidth
@@ -23,7 +22,6 @@ export async function newMovie(content: HTMLElement, baseScene: SceneData, ...ot
     renderer.setSize(window.innerWidth, window.innerHeight)
   }, false)
 
-
   const stats = new Stats()
   stats.showPanel(0)
   document.body.appendChild(stats.dom)
@@ -38,7 +36,7 @@ export async function newMovie(content: HTMLElement, baseScene: SceneData, ...ot
     currentScene: await initSceneEx(baseScene, loader, camera),
     loader,
     scenes: [baseScene, ...otherScenes],
-    stats
+    stats,
   }
   next(movie, content)
   return movie
@@ -49,11 +47,11 @@ export function play(movie: Movie) {
     movie.stats.begin()
     const time = t * 0.0002
     movie.animationId = requestAnimationFrame(animate)
-    
+
     movie.scenes[movie.sceneIdx].update(movie.currentScene, time)
-    
+
     movie.renderer.render(movie.currentScene.base, movie.camera)
-    
+
     movie.scenes[movie.sceneIdx].cameraMovement(movie.currentScene, movie.camera, time)
     movie.stats.end()
   }
