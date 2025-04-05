@@ -5,6 +5,10 @@ import { getFresnelMat } from '../fx/fresnelMat'
 import { getParticleSystem } from '../fx/getParticleSystem'
 import getParticles from '../fx/particles'
 import { applyToMaterial, zip } from '../util'
+import { SceneEx } from '../types'
+import createStellarRemnant from '../fx/stellarRemnant'
+import { deleteObject } from '../scene'
+import newNeutronStar from './NeutronStar'
 
 function getCorona() {
   const radius = 0.6
@@ -239,6 +243,40 @@ export function contractCore(star: THREE.Mesh, scale: number) {
     overwrite: true,
   })
 }
+
+
+export const explode = (mesh: THREE.Mesh, scene: SceneEx) => {
+  const { remnantMesh, remnantMaterial } = createStellarRemnant()
+  scene.base.add(remnantMesh)
+  gsap.timeline()
+    .to(mesh.scale, {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+      duration: 0.5,
+      ease: 'expo.in',
+      overwrite: true,
+    })
+    .then(() => {
+      if (scene.star) {
+        deleteObject(scene.star)
+      }
+      scene.star = undefined
+      gsap.timeline()
+        .to(remnantMaterial.uniforms.uScale, {
+          value: 3,
+          duration: 0.5,
+          ease: 'expo.in',
+        })
+
+      scene.base.add(newNeutronStar())
+
+      if (scene.lensFlareFx.material instanceof THREE.ShaderMaterial) {
+        scene.lensFlareFx.material.uniforms.enabled.value = true
+      }
+    })
+}
+
 
 export function toggleParticleSystem(star: THREE.Mesh, enabled = true) {
   star.userData.particleSystem.state.enabled = enabled

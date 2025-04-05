@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "moduleResolution": "bundler",
-    "strict": true
+    "strict": false
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "fx/LensFlare.js"]
 }

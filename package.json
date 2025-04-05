@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "express": "^4.21.2",
-    "gsap": "^3.12.7"
+    "gsap": "^3.12.7",
+    "maath": "^0.10.8",
+    "stats.js": "^0.17.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.11.0",

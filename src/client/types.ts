@@ -1,5 +1,6 @@
 import type * as THREE from 'three'
 import type { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 
 export type CameraPathCallback = (scene: SceneEx, camera: THREE.Camera, time: number) => void
 export type CameraInitCallback = (camera: THREE.Camera) => void
@@ -20,6 +21,7 @@ export interface SceneData {
 }
 
 export interface SceneEx {
+  lensFlareFx: THREE.Mesh<THREE.BufferGeometry<THREE.NormalBufferAttributes>, THREE.Material | THREE.Material[], THREE.Object3DEventMap>
   base: THREE.Scene
   assets: Map<string, THREE.Mesh>
   paragraphText: string[]
@@ -38,4 +40,5 @@ export interface Movie {
   loader: OBJLoader
   w: number
   h: number
+  stats: Stats
 }
