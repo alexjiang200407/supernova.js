@@ -1,26 +1,25 @@
-import { destroySceneEx, initSceneEx } from "./scene";
-import { Movie as Movie, SceneData } from "./types";
+import type { Movie, SceneData } from './types'
 import * as THREE from 'three'
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+import { destroySceneEx, initSceneEx } from './scene'
 
-export const newMovie = async (content: HTMLElement, baseScene: SceneData, ...otherScenes: SceneData[]): Promise<Movie> => {
+export async function newMovie(content: HTMLElement, baseScene: SceneData, ...otherScenes: SceneData[]): Promise<Movie> {
   const w = window.innerWidth
   const h = window.innerHeight
   const renderer = new THREE.WebGLRenderer({ antialias: true })
   const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000)
-  const loader = new OBJLoader
+  const loader = new OBJLoader()
 
   baseScene.cameraInit(camera)
 
   renderer.setSize(w, h)
-  document.body.appendChild(renderer.domElement);
+  document.body.appendChild(renderer.domElement)
 
   window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
   }, false)
-
 
   const movie = {
     animationId: undefined,
@@ -37,22 +36,22 @@ export const newMovie = async (content: HTMLElement, baseScene: SceneData, ...ot
   return movie
 }
 
-export const play = (movie: Movie) => {
+export function play(movie: Movie) {
   const animate = (t: number = 0) => {
-    const time = t * 0.0002;
-    movie.animationId = requestAnimationFrame(animate);
-    
-    movie.scenes[movie.sceneIdx].update(movie.currentScene, time);
-    movie.renderer.render(movie.currentScene.base, movie.camera);
+    const time = t * 0.0002
+    movie.animationId = requestAnimationFrame(animate)
+
+    movie.scenes[movie.sceneIdx].update(movie.currentScene, time)
+    movie.renderer.render(movie.currentScene.base, movie.camera)
 
     movie.scenes[movie.sceneIdx].cameraMovement(movie.currentScene, movie.camera, time)
   }
 
-  animate();
+  animate()
 }
 
-export const nextScene = async (movie: Movie, content: HTMLElement) => {
-  if (movie.sceneIdx == movie.scenes.length - 1)
+export async function nextScene(movie: Movie, content: HTMLElement) {
+  if (movie.sceneIdx === movie.scenes.length - 1)
     return
   movie.sceneIdx++
   movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader, movie.camera, movie.currentScene)
@@ -60,23 +59,22 @@ export const nextScene = async (movie: Movie, content: HTMLElement) => {
   movie.scenes[movie.sceneIdx].next(movie.currentScene, content)
 }
 
-export const destroyMovie = (movie: Movie) => {
+export function destroyMovie(movie: Movie) {
   movie.renderer.dispose()
   if (movie.animationId) {
-    cancelAnimationFrame(movie.animationId);
+    cancelAnimationFrame(movie.animationId)
   }
   destroySceneEx(movie.currentScene)
   if (movie.renderer.domElement && movie.renderer.domElement.parentNode) {
-    movie.renderer.domElement.parentNode.removeChild(movie.renderer.domElement);
+    movie.renderer.domElement.parentNode.removeChild(movie.renderer.domElement)
   }
 
-  movie.currentScene.base = null as unknown as THREE.Scene;
-  movie.renderer = null as unknown as THREE.WebGLRenderer;
-  movie.camera = null as unknown as THREE.Camera;
-
+  movie.currentScene.base = null as unknown as THREE.Scene
+  movie.renderer = null as unknown as THREE.WebGLRenderer
+  movie.camera = null as unknown as THREE.Camera
 }
 
-export const next = async (movie: Movie, content: HTMLElement) => {
+export async function next(movie: Movie, content: HTMLElement) {
   if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content)) {
     nextScene(movie, content)
     return

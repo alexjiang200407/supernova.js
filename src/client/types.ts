@@ -1,13 +1,12 @@
+import type * as THREE from 'three'
+import type { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 
-import * as THREE from "three"
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-
-export type CameraPathCallback = (scene: SceneEx, camera: THREE.Camera, time: number) => void;
-export type CameraInitCallback = (camera: THREE.Camera) => void;
-export type SceneInitCallback = (scene: SceneEx, camera: THREE.Camera) => void;
-export type UpdateCallback = (scene: SceneEx, time: number) => void;
-export type NextCallback = (scene: SceneEx, content: HTMLElement) => boolean;
-export type HandleShotCallback = (scene: SceneEx, shotIdx: number) => void;
+export type CameraPathCallback = (scene: SceneEx, camera: THREE.Camera, time: number) => void
+export type CameraInitCallback = (camera: THREE.Camera) => void
+export type SceneInitCallback = (scene: SceneEx, camera: THREE.Camera) => void
+export type UpdateCallback = (scene: SceneEx, time: number) => void
+export type NextCallback = (scene: SceneEx, content: HTMLElement) => boolean
+export type HandleShotCallback = (scene: SceneEx, shotIdx: number) => void
 
 export interface SceneData {
   assets: string[]
@@ -30,7 +29,7 @@ export interface SceneEx {
 }
 
 export interface Movie {
-  animationId?: number;
+  animationId?: number
   renderer: THREE.WebGLRenderer
   camera: THREE.Camera
   scenes: SceneData[]

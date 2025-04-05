@@ -262,4 +262,3 @@ To help support my projects, please check out my TypeScript books.
 &nbsp;<a href="https://www.amazon.com.au/dp/B094716FD6"><img src="./docs/flag_au.gif">&nbsp; https://www.amazon.com.au/dp/B094716FD6</a><br/>
 
 (ASIN : B0948BCH24 / B094716FD6)<br/>
-

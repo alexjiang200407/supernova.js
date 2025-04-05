@@ -1,6 +1,6 @@
-import * as THREE from "three";
+import * as THREE from 'three'
 
-const loader = new THREE.TextureLoader();
+const loader = new THREE.TextureLoader()
 
 interface GetSpriteArgs {
   color: THREE.ColorRepresentation
@@ -9,21 +9,20 @@ interface GetSpriteArgs {
   size: number
 }
 
-
 function getSprite({ color, opacity, pos, size }: GetSpriteArgs) {
   const spriteMat = new THREE.SpriteMaterial({
     color,
-    map: loader.load("./textures/rad-grad.png"),
+    map: loader.load('./textures/rad-grad.png'),
     transparent: true,
     opacity,
-  });
-  spriteMat.color.offsetHSL(0, 0, Math.random() * 0.2 - 0.1);
-  const sprite = new THREE.Sprite(spriteMat);
-  sprite.position.set(pos.x, -pos.y, pos.z);
-  size += Math.random() - 0.5;
-  sprite.scale.set(size, size, size);
-  sprite.material.rotation = 0;
-  return sprite;
+  })
+  spriteMat.color.offsetHSL(0, 0, Math.random() * 0.2 - 0.1)
+  const sprite = new THREE.Sprite(spriteMat)
+  sprite.position.set(pos.x, -pos.y, pos.z)
+  size += Math.random() - 0.5
+  sprite.scale.set(size, size, size)
+  sprite.material.rotation = 0
+  return sprite
 }
 
 function getNebula({
@@ -35,19 +34,19 @@ function getNebula({
   size = 1,
   z = 0,
 }): THREE.Group<THREE.Object3DEventMap> {
-  const layerGroup = new THREE.Group();
+  const layerGroup = new THREE.Group()
   for (let i = 0; i < numSprites; i += 1) {
-    let angle = (i / numSprites) * Math.PI * 2;
+    const angle = (i / numSprites) * Math.PI * 2
     const pos = new THREE.Vector3(
       Math.cos(angle) * Math.random() * radius,
       Math.sin(angle) * Math.random() * radius,
-      z + Math.random()
-    );
+      z + Math.random(),
+    )
 
-    let color = new THREE.Color().setHSL(hue, 1, sat);
-    const sprite = getSprite({ color, opacity, pos, size });
-    layerGroup.add(sprite);
+    const color = new THREE.Color().setHSL(hue, 1, sat)
+    const sprite = getSprite({ color, opacity, pos, size })
+    layerGroup.add(sprite)
   }
-  return layerGroup;
+  return layerGroup
 }
-export default getNebula;
+export default getNebula

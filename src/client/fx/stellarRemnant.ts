@@ -1,26 +1,23 @@
 import * as THREE from 'three'
 
-
-const createStellarRemnant = () => {
+function createStellarRemnant() {
   const numParticles = 100000
   const vertices = []
   const randomForParticles = new Float32Array(numParticles * 3)
 
   for (let i = 0; i < numParticles; i++) {
+    const x = THREE.MathUtils.randFloatSpread(10)// random float between -5 and 5
+    const y = THREE.MathUtils.randFloatSpread(10)
+    const z = THREE.MathUtils.randFloatSpread(10)
 
-      const x = THREE.MathUtils.randFloatSpread(10)//random float between -5 and 5
-      const y = THREE.MathUtils.randFloatSpread(10)
-      const z = THREE.MathUtils.randFloatSpread(10)
+    vertices.push(x, y, z)
 
-      vertices.push(x, y, z)
+    randomForParticles.set([
+      Math.random() * 2 - 1, // zero to 2 minus 1
+      Math.random() * 2 - 1, // zero to 2 minus 1
+      Math.random() * 2 - 1, // zero to 2 minus 1
 
-      randomForParticles.set([
-          Math.random() * 2 - 1,// zero to 2 minus 1
-          Math.random() * 2 - 1,// zero to 2 minus 1
-          Math.random() * 2 - 1// zero to 2 minus 1
-
-      ], i * 3)
-
+    ], i * 3)
   }
 
   const starsGeometry = new THREE.BufferGeometry()
@@ -28,13 +25,13 @@ const createStellarRemnant = () => {
   starsGeometry.setAttribute('aRandom', new THREE.BufferAttribute(randomForParticles, 3))
 
   const starsMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-          uColor: { value: new THREE.Color(0x31c48D) },
-          uColor1: { value: new THREE.Color(0x6C63FF) },
-          uTime: { value: 0},
-          uScale: { value: 0 }
-      },
-      vertexShader: `
+    uniforms: {
+      uColor: { value: new THREE.Color(0x31C48D) },
+      uColor1: { value: new THREE.Color(0x6C63FF) },
+      uTime: { value: 0 },
+      uScale: { value: 0 },
+    },
+    vertexShader: `
 // uniform type is used for the data that don't change among the vertices (are uniform)
 uniform float uTime;
 uniform float uScale;
@@ -88,7 +85,7 @@ void main() {
       
       
       `,
-      fragmentShader: `
+    fragmentShader: `
 // uniform type is used for the data that don't change among the vertices (are uniform)
  uniform vec3 uColor;
  uniform vec3 uColor1;
@@ -115,11 +112,10 @@ void main() {
     vec3 mixedColor = mix(uColor, uColor1, depth);
     gl_FragColor = vec4(mixedColor, 1.0);
 }      `,
-      depthTest: false,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
+    depthTest: false,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
   })
-
 
   const stars = new THREE.Points(starsGeometry, starsMaterial)
 
@@ -127,9 +123,7 @@ void main() {
     stars.material.uniforms.uTime.value = t
   }
 
-  return {remnantMesh: stars, remnantMaterial: starsMaterial}
+  return { remnantMesh: stars, remnantMaterial: starsMaterial }
 }
-
-
 
 export default createStellarRemnant

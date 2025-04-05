@@ -1,11 +1,12 @@
-import * as THREE from 'three'
-import { SceneData as Scene, SceneEx } from '../types';
-import { nextSlide, rotateCamera } from '../scene';
-import { range } from '../util';
-import { contractCore, hideLayerMesh, hideOuter, toggleParticleSystem } from '../solarsystem/Star';
+import type * as THREE from 'three'
+import type { SceneData as Scene, SceneEx } from '../types'
+import { nextSlide, rotateCamera } from '../scene'
+import { contractCore, hideOuter, toggleParticleSystem } from '../solarsystem/Star'
+import { range } from '../util'
 
-const handleShot = (scene: SceneEx, shotIdx: number) => {
-  if (!scene.star) return
+function handleShot(scene: SceneEx, shotIdx: number) {
+  if (!scene.star)
+    return
   if (shotIdx === 3) {
     contractCore(scene.star, 0.1)
   }
@@ -18,27 +19,25 @@ const handleShot = (scene: SceneEx, shotIdx: number) => {
   }
 }
 
-
-const newScene5 = (): Scene => {
+function newScene5(): Scene {
   return {
     cameraMovement: rotateCamera,
     init: () => {},
     assets: [],
     cameraInit: (camera: THREE.Camera): void => {
-      camera.position.set(0, 0, 6);
+      camera.position.set(0, 0, 6)
       camera.rotateX(-0.1)
       camera.rotateY(-0.3)
     },
     update: (scene: SceneEx, time) => {
       scene.base.children.forEach((child) => {
-        child.userData.update?.(time);
-      });
+        child.userData.update?.(time)
+      })
     },
     next: nextSlide,
     paragraphPaths: range(1, 6).map(n => `text/slide5/${n}.html`),
-    handleShot
+    handleShot,
   }
 }
-
 
 export default newScene5

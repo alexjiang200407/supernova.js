@@ -1,29 +1,33 @@
 {
-  "name": "three.js-typescript-boilerplate",
+  "name": "supernova-js",
   "version": "1.0.0",
   "description": "",
+  "author": "Alex Jiang",
+  "license": "MIT",
   "scripts": {
     "build": "webpack --config ./src/client/webpack.prod.js",
     "tsc": "tsc",
     "dev": "webpack serve --config ./src/client/webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/server/server.js"
+    "start": "node ./dist/server/server.js",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
-  "author": "Sean Bradley",
-  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "gsap": "^3.12.7"
+  },
   "devDependencies": {
+    "@antfu/eslint-config": "^4.11.0",
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.13",
     "@types/three": "^0.174.0",
+    "eslint": "^9.24.0",
     "three": "^0.174.0",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.2",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0"
-  },
-  "dependencies": {
-    "express": "^4.21.2",
-    "gsap": "^3.12.7"
   }
 }
