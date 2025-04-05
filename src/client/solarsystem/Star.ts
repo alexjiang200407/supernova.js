@@ -2,9 +2,10 @@ import * as THREE from 'three';
 import { getFresnelMat } from "../fx/fresnelMat";
 import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js';
 import gsap from "gsap";
-import { applyToMaterial, zip } from '../util';
+import { applyToMaterial, sleep, zip } from '../util';
 import getParticles from '../fx/particles';
 import { getParticleSystem } from '../fx/getParticleSystem';
+import explode from '../fx/explosionFx';
 
 function getCorona() {
   const radius = 0.6;
@@ -125,8 +126,7 @@ const newSun = (camera: THREE.Camera, scene: THREE.Scene): THREE.Mesh => {
     sun.rotation.y = t;
     if (coronaMesh.userData.update) coronaMesh.userData.update(t);
 
-    if (sun.userData.doParticleSystem)
-      sun.userData.particleSystem.update(0.05)
+    sun.userData.particleSystem.update(0.05)
 
   };
 
@@ -244,8 +244,8 @@ export const contractCore = (star: THREE.Mesh, scale: number) => {
 }
 
 
-export const startParticleSystem = (star: THREE.Mesh) => {
-  star.userData.doParticleSystem = true
+export const toggleParticleSystem = (star: THREE.Mesh, enabled = true) => {
+  star.userData.particleSystem.state.enabled = enabled
 }
 
 

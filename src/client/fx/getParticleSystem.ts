@@ -99,7 +99,7 @@ function getParticleSystem({
   maxLife = 1.5,
   maxSize = 0.15,
   maxVelocity = 0.5,
-}: ParticleSystemParams): { update: (dt: number) => void } {
+}: ParticleSystemParams): { update: (dt: number) => void, state: { enabled: boolean } } {
 
   const uniforms = {
     diffuseTexture: {
@@ -220,13 +220,17 @@ function getParticleSystem({
     geometry.attributes.angle.needsUpdate = true;
   }
 
+  let state = {enabled: false}
+
   function update(dt: number) {
-    _AddParticles(dt);
+    if (state.enabled) {
+      _AddParticles(dt);
+    }
     _UpdateParticles(dt);
     _UpdateGeometry();
   }
 
-  return { update };
+  return { update, state };
 }
 
 export { getParticleSystem };

@@ -52,7 +52,8 @@ export const initSceneEx = async (data: SceneData, loader: OBJLoader, camera: TH
   }
 
   data.init(sceneEx, camera)
-
+  data.handleShot(sceneEx, 1)
+  
   return sceneEx
 }
 

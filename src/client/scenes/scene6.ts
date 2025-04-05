@@ -2,24 +2,19 @@ import * as THREE from 'three'
 import { SceneData as Scene, SceneEx } from '../types';
 import { nextSlide, rotateCamera } from '../scene';
 import { range } from '../util';
-import { contractCore, hideLayerMesh, hideOuter, toggleParticleSystem } from '../solarsystem/Star';
+import explode from '../fx/explosionFx';
+import { toggleParticleSystem } from '../solarsystem/Star';
+
 
 const handleShot = (scene: SceneEx, shotIdx: number) => {
-  if (!scene.star) return
-  if (shotIdx === 3) {
-    contractCore(scene.star, 0.1)
-  }
-  if (shotIdx === 4) {
-    toggleParticleSystem(scene.star)
-  }
-  if (shotIdx === 6) {
-    scene.base.userData.cameraDistance = 18
-    hideOuter(scene.star, true)
+  if (shotIdx === 2 && scene.star) {
+    toggleParticleSystem(scene.star, false)
+    explode(scene.star, scene)
   }
 }
 
 
-const newScene5 = (): Scene => {
+const newScene6 = (): Scene => {
   return {
     cameraMovement: rotateCamera,
     init: () => {},
@@ -35,10 +30,10 @@ const newScene5 = (): Scene => {
       });
     },
     next: nextSlide,
-    paragraphPaths: range(1, 6).map(n => `text/slide5/${n}.html`),
+    paragraphPaths: range(1, 3).map(n => `text/slide6/${n}.html`),
     handleShot
   }
 }
 
 
-export default newScene5
+export default newScene6

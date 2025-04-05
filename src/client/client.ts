@@ -1,15 +1,15 @@
-import { getParticleSystem } from './fx/getParticleSystem';
 import { play, newMovie, next, destroyMovie } from './movie'
 import newScene1 from './scenes/scene1'
 import newScene2 from './scenes/scene2';
 import newScene3 from './scenes/scene3';
 import newScene4 from './scenes/scene4';
 import newScene5 from './scenes/scene5';
+import newScene6 from './scenes/scene6';
 import { sleep } from './util';
 
 const content = document.getElementById("text-content")
 
-newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene4(), newScene5())
+newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene4(), newScene5(), newScene6())
 .then(m => {
   const unloadListener = () => {
     destroyMovie(m)
