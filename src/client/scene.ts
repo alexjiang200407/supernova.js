@@ -23,7 +23,7 @@ async function loadAssets(loader: OBJLoader, paths: string[]) {
 export async function initSceneEx(data: SceneData, loader: OBJLoader, camera: THREE.Camera, currentScene?: SceneEx): Promise<SceneEx> {
   const assets = await loadAssets(loader, data.assets)
 
-  let sceneEx
+  let sceneEx: SceneEx
 
   if (currentScene) {
     sceneEx = {

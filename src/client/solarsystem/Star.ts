@@ -6,8 +6,9 @@ import { getFresnelMat } from '../fx/fresnelMat'
 import { getParticleSystem } from '../fx/getParticleSystem'
 import getParticles from '../fx/particles'
 import { deleteObject } from '../scene'
-import { applyToMaterial, zip } from '../util'
+import { applyToMaterial, sleep, zip } from '../util'
 import newNeutronStar from './NeutronStar'
+import { newSupernovaAnimation } from '../fx/SuperNovaAnimation'
 
 function getCorona() {
   const radius = 0.6
@@ -260,18 +261,8 @@ export function explode(mesh: THREE.Mesh, scene: SceneEx) {
         deleteObject(scene.star)
       }
       scene.star = undefined
-      // gsap.timeline()
-      //   .to(remnantMaterial.uniforms.uScale, {
-      //     value: 3,
-      //     duration: 0.5,
-      //     ease: 'expo.in',
-      //   })
 
-      scene.base.add(newNeutronStar())
-
-      if (scene.lensFlareFx.material instanceof THREE.ShaderMaterial) {
-        scene.lensFlareFx.material.uniforms.enabled.value = true
-      }
+      newSupernovaAnimation(scene)
     })
 }
 

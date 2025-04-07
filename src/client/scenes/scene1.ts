@@ -7,7 +7,8 @@ import getNebula from '../solarsystem/Nebula'
 import getPlanet from '../solarsystem/Planet'
 import newSun from '../solarsystem/Star'
 import getStarfield from '../starfield'
-import { range } from '../util'
+import { range, sleep } from '../util'
+import { newSupernovaAnimation } from '../fx/SuperNovaAnimation'
 
 function initScene(scene: SceneEx, camera: THREE.Camera) {
   const solarSystem = new THREE.Group()
@@ -78,10 +79,8 @@ function initScene(scene: SceneEx, camera: THREE.Camera) {
   scene.base.userData.oldCameraDistance = scene.base.userData.cameraDistance
   scene.planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, asteroidBelt]
   scene.star = sun
-  const lensFlareEffect = LensFlareEffect()
-  scene.base.add(lensFlareEffect)
 
-  scene.lensFlareFx = lensFlareEffect
+
 }
 
 function newScene1(): Scene {
