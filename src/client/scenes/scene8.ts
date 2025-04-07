@@ -3,8 +3,14 @@ import type { SceneData as Scene, SceneEx } from '../types'
 import { nextSlide, rotateCamera } from '../scene'
 import { range } from '../util'
 
+function handleShot(scene: SceneEx, shotIdx: number) {
+  if (shotIdx === 2) {
+    console.log("FUCK")
+    scene.supernova?.fade()
+  }
+}
 
-function newScene7(): Scene {
+function newScene8(): Scene {
   return {
     cameraMovement: rotateCamera,
     init: () => {},
@@ -20,9 +26,9 @@ function newScene7(): Scene {
       })
     },
     next: nextSlide,
-    paragraphPaths: range(1, 5).map(n => `text/slide7/${n}.html`),
-    handleShot: () => {},
+    paragraphPaths: range(1, 2).map(n => `text/slide8/${n}.html`),
+    handleShot,
   }
 }
 
-export default newScene7
+export default newScene8

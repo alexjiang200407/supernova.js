@@ -44,7 +44,7 @@ export class SuperNovaAnimation {
   private ptsInfos: AnimatedVector[]
 
   private state = TIMELINE.STOPPED
-  private thres = TIMELINE.SHELL
+  private doFade = false
   private animationStartTime = -1
   private animationElapsedTime = TIMELINE.STOPPED
 
@@ -273,18 +273,18 @@ export class SuperNovaAnimation {
         positions[i * 3 + 2] += ptInfo.velocity.z
       }
 
-      // if (this.state == TIMELINE.FADE_OUT) {
-      //     let color: number;
-      //     for (let j = 0; j < 3; j++) {
+      if (this.doFade) {
+          let color: number;
+          for (let j = 0; j < 3; j++) {
 
-      //         color = Math.max(
-      //             colors[i * 3 + j] + ptInfo.colorFadeOutRate,
-      //             0);
+              color = Math.max(
+                  colors[i * 3 + j] + ptInfo.colorFadeOutRate,
+                  0);
 
-      //         colors[i * 3 + j] = color;
-      //     }
+              colors[i * 3 + j] = color;
+          }
 
-      // }
+      }
     }
 
     (this.geometry.attributes.position as BufferAttribute).needsUpdate = true;
@@ -304,6 +304,10 @@ export class SuperNovaAnimation {
     this.animationElapsedTime = Date.now() - this.animationStartTime
 
     this.state = bsb.le(timeline, this.animationElapsedTime)
+  }
+
+  fade() {
+    this.doFade = true
   }
 
   pause() {
