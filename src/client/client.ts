@@ -7,11 +7,12 @@ import newScene5 from './scenes/scene5'
 import newScene6 from './scenes/scene6'
 import newScene7 from './scenes/scene7'
 import newScene8 from './scenes/scene8'
+import newScene9 from './scenes/scene9'
 import { sleep } from './util'
 
 const content = document.getElementById('text-content')
 
-newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene4(), newScene5(), newScene6(), newScene7(), newScene8())
+newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene4(), newScene5(), newScene6(), newScene7(), newScene8(), newScene9())
   .then((m) => {
     const unloadListener = () => {
       destroyMovie(m)
