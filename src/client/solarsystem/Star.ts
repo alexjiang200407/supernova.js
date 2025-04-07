@@ -5,10 +5,9 @@ import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js'
 import { getFresnelMat } from '../fx/fresnelMat'
 import { getParticleSystem } from '../fx/getParticleSystem'
 import getParticles from '../fx/particles'
-import { deleteObject } from '../scene'
-import { applyToMaterial, sleep, zip } from '../util'
-import newNeutronStar from './NeutronStar'
 import { newSupernovaAnimation } from '../fx/SuperNovaAnimation'
+import { deleteObject } from '../scene'
+import { applyToMaterial, zip } from '../util'
 
 function getCorona() {
   const radius = 0.6

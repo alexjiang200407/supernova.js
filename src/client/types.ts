@@ -1,7 +1,6 @@
 import type * as THREE from 'three'
 import type { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import { SuperNovaAnimation } from './fx/SuperNovaAnimation'
+import type { SuperNovaAnimation } from './fx/SuperNovaAnimation'
 
 export type CameraPathCallback = (scene: SceneEx, camera: THREE.Camera, time: number) => void
 export type CameraInitCallback = (camera: THREE.Camera) => void

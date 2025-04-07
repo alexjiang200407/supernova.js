@@ -1,14 +1,12 @@
 import type { SceneData as Scene, SceneEx } from '../types'
 import * as THREE from 'three'
-import { LensFlareEffect } from '../fx/LensFlare'
 import { nextSlide, rotateCamera } from '../scene'
 import getAsteroidBelt from '../solarsystem/Asteroids'
 import getNebula from '../solarsystem/Nebula'
 import getPlanet from '../solarsystem/Planet'
 import newSun from '../solarsystem/Star'
 import getStarfield from '../starfield'
-import { range, sleep } from '../util'
-import { newSupernovaAnimation } from '../fx/SuperNovaAnimation'
+import { range } from '../util'
 
 function initScene(scene: SceneEx, camera: THREE.Camera) {
   const solarSystem = new THREE.Group()
@@ -79,8 +77,6 @@ function initScene(scene: SceneEx, camera: THREE.Camera) {
   scene.base.userData.oldCameraDistance = scene.base.userData.cameraDistance
   scene.planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, asteroidBelt]
   scene.star = sun
-
-
 }
 
 function newScene1(): Scene {
