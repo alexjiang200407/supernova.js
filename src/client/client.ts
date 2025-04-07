@@ -24,7 +24,11 @@ newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene
 
     if (nextButton && content && scrollbar) {
       nextButton.onclick = async () => {
-        await next(m, content)
+        const hasNext = await next(m, content)
+        if (!hasNext) {
+          content.innerHTML = `<h1 class='title'>The End!</h1>`
+          nextButton.parentElement.removeChild(nextButton)
+        }
         scrollbar.scrollTo({ behavior: 'smooth', left: 0, top: scrollbar.scrollHeight })
       }
     }

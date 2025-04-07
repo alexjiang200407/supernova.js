@@ -61,11 +61,12 @@ export function play(movie: Movie) {
 
 export async function nextScene(movie: Movie, content: HTMLElement) {
   if (movie.sceneIdx === movie.scenes.length - 1)
-    return
+    return false
   movie.sceneIdx++
   movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader, movie.camera, movie.currentScene)
   content.innerHTML = ''
   movie.scenes[movie.sceneIdx].next(movie.currentScene, content)
+  return true
 }
 
 export function destroyMovie(movie: Movie) {
@@ -85,8 +86,8 @@ export function destroyMovie(movie: Movie) {
 
 export async function next(movie: Movie, content: HTMLElement) {
   if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content)) {
-    nextScene(movie, content)
-    return
+    return nextScene(movie, content)
   }
   movie.scenes[movie.sceneIdx].handleShot(movie.currentScene, movie.currentScene.currentShot)
+  return true
 }
