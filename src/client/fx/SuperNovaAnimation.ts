@@ -8,9 +8,9 @@ import * as bsb from 'binary-search-bounds';
 // todo: convert to overridable options
 const MIN_PT_SIZE = 0.05;
 const MAX_PT_SIZE = 0.5;
-const MAX_PTS_COUNT = 50000;
+const MAX_PTS_COUNT = 200000;
 const MAX_DIST_FROM_ORIGIN1 = 0.001;
-const MAX_DIST_FROM_ORIGIN2 = 0.001;
+const MAX_DIST_FROM_ORIGIN2 = 0.5;
 const MAX_VELOCITY = 0.3;
 const MIN_VELOCITY = 0.1;
 const MIN_COLOR_FADE_RATE = 0.02;
@@ -18,7 +18,7 @@ const MAX_COLOR_FADE_RATE = 0.03;
 const MAX_DRIFT = 1;
 const MAX_DRIFT_FREQ = 20; // percentage
 const FADEIN_RATE = 0.05;
-const VEL_RAND = 0.1;
+const VEL_RAND = 0.2;
 enum BURST_SHAPE { RANDOM = 0, RING };
 enum TIMELINE { STOPPED = 0, FADE_IN, EXPLODE, SHELL, FADE_OUT, END }
 
@@ -35,7 +35,7 @@ function randomPointOnSphere(radius: number, centerX = 0, centerY = 0, centerZ =
   return { x, y, z };
 }
 
-class SuperNovaAnimation {
+export class SuperNovaAnimation {
 
     private static POINTS_OBJECT3_NAME = "STAR_ANIMATION";
     private static INSTANCE_CNT = 1;
@@ -197,9 +197,12 @@ class SuperNovaAnimation {
                     break;
             }
 
-            ptInfo.velocity.x *= vel + Math.random() * VEL_RAND;
-            ptInfo.velocity.y *= vel + Math.random() * VEL_RAND;
-            ptInfo.velocity.z *= vel + Math.random() * VEL_RAND;
+            ptInfo.velocity.x + THREE.MathUtils.randFloat(-VEL_RAND, VEL_RAND);
+            ptInfo.velocity.x *= vel
+            ptInfo.velocity.y + THREE.MathUtils.randFloat(-VEL_RAND, VEL_RAND);
+            ptInfo.velocity.y *= vel;
+            ptInfo.velocity.z + THREE.MathUtils.randFloat(-VEL_RAND, VEL_RAND);
+            ptInfo.velocity.z *= vel;
 
             //add random drift to some points
             if (i % driftFreq == 0) {
@@ -227,12 +230,6 @@ class SuperNovaAnimation {
         (this.geometry.attributes.customColor as BufferAttribute).needsUpdate = true;
     }
 
-    continue() {
-      this.state = this.thres;
-      this.animationElapsedTime = timeline[this.thres];
-      this.thres++
-      console.log(this.state, this.thres)
-    }
 
     animate() {
       this.updateState();
@@ -244,9 +241,9 @@ class SuperNovaAnimation {
           return;
         }
 
-        if (this.state === this.thres) {
-          this.pause()
-        }
+        // if (this.state === this.thres) {
+        //   this.pause()
+        // }
 
         const positions = this.geometry.attributes.position.array as Float32Array;
         const colors = this.geometry.attributes.customColor.array as Float32Array;
@@ -287,18 +284,18 @@ class SuperNovaAnimation {
                 positions[i * 3 + 2] += ptInfo.velocity.z;
             }
 
-            if (this.state == TIMELINE.FADE_OUT) {
-                let color: number;
-                for (let j = 0; j < 3; j++) {
+            // if (this.state == TIMELINE.FADE_OUT) {
+            //     let color: number;
+            //     for (let j = 0; j < 3; j++) {
 
-                    color = Math.max(
-                        colors[i * 3 + j] + ptInfo.colorFadeOutRate,
-                        0);
+            //         color = Math.max(
+            //             colors[i * 3 + j] + ptInfo.colorFadeOutRate,
+            //             0);
 
-                    colors[i * 3 + j] = color;
-                }
+            //         colors[i * 3 + j] = color;
+            //     }
 
-            }
+            // }
         }
 
         (this.geometry.attributes.position as BufferAttribute).needsUpdate = true;

@@ -262,7 +262,7 @@ export function explode(mesh: THREE.Mesh, scene: SceneEx) {
       }
       scene.star = undefined
 
-      newSupernovaAnimation(scene)
+      scene.supernova = newSupernovaAnimation(scene)
     })
 }
 

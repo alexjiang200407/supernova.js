@@ -27,7 +27,7 @@ function newScene6(): Scene {
       })
     },
     next: nextSlide,
-    paragraphPaths: range(1, 3).map(n => `text/slide6/${n}.html`),
+    paragraphPaths: range(1, 6).map(n => `text/slide6/${n}.html`),
     handleShot,
   }
 }
