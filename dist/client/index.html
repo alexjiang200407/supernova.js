@@ -16,6 +16,7 @@
             canvas { display: block; }
 
             ::-webkit-scrollbar {
+                /* margin-left: 20px; */
                 width: 7px; /* Width of vertical scrollbar */
                 height: 12px; /* Height of horizontal scrollbar */
                 transition: color 0.2s ease-in;
@@ -38,14 +39,14 @@
 
 
             #ui {
+              animation: fade-in 0.5s ease-in;
               position: absolute;
-              right: 20px;
-              top: 20px;
-              max-width: 650px;
-              height: calc(100vh - 40px);
-              padding: 40px;
-              padding-inline: 15px;
-              padding-right: 5px;
+              right: 50px;
+              height: 100vh;
+              padding: 20px;
+              padding-right: 0;
+              border-radius: 0%;
+              background-color: rgba(0, 0, 0, 0.75);
             }
             
             .content {
@@ -104,7 +105,7 @@
             }
 
             #text-content {
-                width: 550px;
+                width: 450px;
                 margin-bottom: 20px;
             }
 
@@ -127,7 +128,7 @@
     <body>
         <script type="module" src="bundle.js"></script>
         <div id="ui" class="box is-flex is-align-items-center is-justify-content-center" data-theme="dark">
-            <div id="chevron" class="chevron tooltip" data-tooltip="Collapse UI">▶</div>
+            <!-- <div id="chevron" class="chevron tooltip" data-tooltip="Collapse UI">▶</div> -->
             <div class='content' id="collapsible">
                 <div id="text-content">
 
@@ -135,12 +136,5 @@
                 <button class="button is-primary" id="next" >Next</button>
             </div>
         </div>
-        <script>
-            document.getElementById("chevron").addEventListener("click", function () {
-                const collapsible = document.getElementById("collapsible");
-                this.classList.toggle("rotated");
-                collapsible.classList.toggle("collapsed");
-            });
-        </script>
     </body>
 </html>

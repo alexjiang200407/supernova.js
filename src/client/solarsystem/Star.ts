@@ -5,7 +5,6 @@ import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js'
 import { getFresnelMat } from '../fx/fresnelMat'
 import { getParticleSystem } from '../fx/getParticleSystem'
 import getParticles from '../fx/particles'
-import createStellarRemnant from '../fx/stellarRemnant'
 import { deleteObject } from '../scene'
 import { applyToMaterial, zip } from '../util'
 import newNeutronStar from './NeutronStar'
@@ -245,8 +244,8 @@ export function contractCore(star: THREE.Mesh, scale: number) {
 }
 
 export function explode(mesh: THREE.Mesh, scene: SceneEx) {
-  const { remnantMesh, remnantMaterial } = createStellarRemnant()
-  scene.base.add(remnantMesh)
+  // const { remnantMesh, remnantMaterial } = createStellarRemnant()
+  // scene.base.add(remnantMesh)
   gsap.timeline()
     .to(mesh.scale, {
       x: 0.0,
@@ -261,12 +260,12 @@ export function explode(mesh: THREE.Mesh, scene: SceneEx) {
         deleteObject(scene.star)
       }
       scene.star = undefined
-      gsap.timeline()
-        .to(remnantMaterial.uniforms.uScale, {
-          value: 3,
-          duration: 0.5,
-          ease: 'expo.in',
-        })
+      // gsap.timeline()
+      //   .to(remnantMaterial.uniforms.uScale, {
+      //     value: 3,
+      //     duration: 0.5,
+      //     ease: 'expo.in',
+      //   })
 
       scene.base.add(newNeutronStar())
 

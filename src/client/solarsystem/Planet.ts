@@ -13,7 +13,7 @@ export interface PlanetProps {
 
 function getPlanet({ children = [], distance = 0, img = '', size = 1 }: PlanetProps): THREE.Object3D<THREE.Object3DEventMap> {
   const orbitGroup = new THREE.Group()
-  orbitGroup.rotation.x = Math.random() * Math.PI * 2
+  // orbitGroup.rotation.x = Math.random() * Math.PI * 2
 
   const orbitPath = new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(
