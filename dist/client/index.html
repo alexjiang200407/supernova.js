@@ -6,9 +6,13 @@
         <title>supernova</title>
         <link rel="stylesheet" href="bulma.min.css">
         <style>
+
             html {
-                font-size: 20px;
+                font-size: calc(100vw / 1920 * 20);
+                font-smooth: always;
+                -webkit-font-smoothing: always;
             }
+
 
             body { margin: 0; overflow: hidden;  }
 
@@ -41,16 +45,16 @@
             #ui {
               animation: fade-in 0.5s ease-in;
               position: absolute;
-              right: 50px;
+              right: 2%;
               height: 100vh;
-              padding: 20px;
+              padding: 1rem;
               padding-right: 0;
               border-radius: 0%;
               background-color: rgba(0, 0, 0, 0.75);
             }
             
             .content {
-                padding-right: 20px;
+                padding-right: 1rem;
                 overflow-y: scroll;
                 height: 100%;
                 max-width: 100%;
@@ -84,7 +88,7 @@
             }
 
             .chevron {
-                margin-right: 20px;
+                margin-right: 1rem;
             }
 
             .chevron {
@@ -105,8 +109,8 @@
             }
 
             #text-content {
-                width: 450px;
-                margin-bottom: 20px;
+                width: 22.5rem;
+                margin-bottom: 1rem;
             }
 
             @keyframes fade-in {
