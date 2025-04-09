@@ -3,7 +3,6 @@ import type { SceneData as Scene, SceneEx } from '../types'
 import { nextSlide, rotateCamera } from '../scene'
 import { range } from '../util'
 
-
 function newScene7(): Scene {
   return {
     cameraMovement: rotateCamera,

@@ -274,16 +274,15 @@ export class SuperNovaAnimation {
       }
 
       if (this.doFade) {
-          let color: number;
-          for (let j = 0; j < 3; j++) {
+        let color: number
+        for (let j = 0; j < 3; j++) {
+          color = Math.max(
+            colors[i * 3 + j] + ptInfo.colorFadeOutRate,
+            0,
+          )
 
-              color = Math.max(
-                  colors[i * 3 + j] + ptInfo.colorFadeOutRate,
-                  0);
-
-              colors[i * 3 + j] = color;
-          }
-
+          colors[i * 3 + j] = color
+        }
       }
     }
 

@@ -15,9 +15,12 @@ function getSprite({ color, opacity, pos, size }: GetSpriteArgs) {
     map: loader.load('./textures/rad-grad.png'),
     transparent: true,
     opacity,
+    depthTest: false,
+    depthWrite: false,
   })
   spriteMat.color.offsetHSL(0, 0, Math.random() * 0.2 - 0.1)
   const sprite = new THREE.Sprite(spriteMat)
+  sprite.renderOrder = 100
   sprite.position.set(pos.x, -pos.y, pos.z)
   size += Math.random() - 0.5
   sprite.scale.set(size, size, size)
