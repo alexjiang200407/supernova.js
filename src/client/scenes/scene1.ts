@@ -2,7 +2,6 @@ import type { SceneData as Scene, SceneEx } from '../types'
 import * as THREE from 'three'
 import { nextSlide, rotateCamera } from '../scene'
 import getAsteroidBelt from '../solarsystem/Asteroids'
-import getNebula from '../solarsystem/Nebula'
 import getPlanet from '../solarsystem/Planet'
 import newSun from '../solarsystem/Star'
 import getStarfield from '../starfield'
@@ -64,15 +63,6 @@ function initScene(scene: SceneEx, camera: THREE.Camera) {
   dirLight.position.set(0, 1, 0)
   scene.base.add(dirLight)
 
-  const nebula = getNebula({
-    hue: 0.6,
-    numSprites: 10,
-    opacity: 0.2,
-    radius: 40,
-    size: 80,
-    z: -50.5,
-  })
-  scene.base.add(nebula)
   scene.base.userData.cameraDistance = 5
   scene.base.userData.oldCameraDistance = scene.base.userData.cameraDistance
   scene.planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, asteroidBelt]

@@ -20,7 +20,7 @@ function getPlanet({ children = [], distance = 0, img = '', size = 1 }: PlanetPr
       new THREE.EllipseCurve(0, 0, distance, distance, 0, Math.PI * 2, false, 0)
         .getPoints(100), // Number of segments
     ),
-    new THREE.LineBasicMaterial({ color: 0x888888, linewidth: 1, opacity: 0.5 }),
+    new THREE.LineBasicMaterial({ color: 0x888888, linewidth: 1 }),
   )
   orbitPath.rotation.x = Math.PI / 2 // Make it horizontal
   orbitGroup.add(orbitPath)

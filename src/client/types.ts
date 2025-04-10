@@ -6,7 +6,7 @@ export type CameraPathCallback = (scene: SceneEx, camera: THREE.Camera, time: nu
 export type CameraInitCallback = (camera: THREE.Camera) => void
 export type SceneInitCallback = (scene: SceneEx, camera: THREE.Camera) => void
 export type UpdateCallback = (scene: SceneEx, time: number) => void
-export type NextCallback = (scene: SceneEx, content: HTMLElement) => boolean
+export type NextCallback = (scene: SceneEx, content: HTMLElement, glossary: Map<string, string>) => boolean
 export type HandleShotCallback = (scene: SceneEx, shotIdx: number) => void
 
 export interface SceneData {
@@ -31,6 +31,7 @@ export interface SceneEx {
 }
 
 export interface Movie {
+  glossary: Map<string, string>
   animationId?: number
   renderer: THREE.WebGLRenderer
   camera: THREE.Camera

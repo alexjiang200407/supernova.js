@@ -11,6 +11,10 @@ export async function newMovie(content: HTMLElement, baseScene: SceneData, ...ot
   const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000)
   const loader = new OBJLoader()
 
+  const glossary = new Map(await fetch('glossary.txt')
+    .then(f => f.text())
+    .then(s => s.split(/\r\n|\r|\n/).flatMap(l => l !== '' ? [l.split(': ', 2) as [string, string]] : [])))
+
   baseScene.cameraInit(camera)
 
   renderer.setSize(w, h)
@@ -37,6 +41,7 @@ export async function newMovie(content: HTMLElement, baseScene: SceneData, ...ot
     loader,
     scenes: [baseScene, ...otherScenes],
     stats,
+    glossary,
   }
   next(movie, content)
   return movie
@@ -65,7 +70,7 @@ export async function nextScene(movie: Movie, content: HTMLElement) {
   movie.sceneIdx++
   movie.currentScene = await initSceneEx(movie.scenes[movie.sceneIdx], movie.loader, movie.camera, movie.currentScene)
   content.innerHTML = ''
-  movie.scenes[movie.sceneIdx].next(movie.currentScene, content)
+  movie.scenes[movie.sceneIdx].next(movie.currentScene, content, movie.glossary)
   return true
 }
 
@@ -85,7 +90,7 @@ export function destroyMovie(movie: Movie) {
 }
 
 export async function next(movie: Movie, content: HTMLElement) {
-  if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content)) {
+  if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content, movie.glossary)) {
     return nextScene(movie, content)
   }
   movie.scenes[movie.sceneIdx].handleShot(movie.currentScene, movie.currentScene.currentShot)

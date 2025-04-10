@@ -1,0 +1,16 @@
+Large Magellanic Cloud: One of the closest neighbour galaxies to the Milky Way.
+((Supernova Remnant|remnant[s]?)|ejecta): Gas and debris from a supernova explosion
+Progenitor Star: The star that existed before the supernova
+Wien’s Law: A law that describes how when temperature increases, the wavelength of the emission decreases.
+(Nuclear )?Fusion: In astronomy, it refers to the process in which its core fuses atomic nuclei to create heavier elements.
+Main Sequence: A star’s main sequence refers to the phase when the star is stably fusing hydrogen into helium.
+Neutron Star: A collapsed star's core. Which is mainly composed of neutrons
+(Red-Supergiant|Supergiant)[s]?: Massive stars with more than 8 times the Sun’s mass will turn into red-supergiants.
+spectral analysis: The study of light emitted and absorbed by celestial objects to determine the chemical composition.
+Wolf-Rayet Star: A rare type of star that loses stellar mass rapidly.
+Hubble Space Telescope: A space telescope launched by NASA in 1990.
+Chandra(’s)? (X\-Ray( Observatory)?)?: An observatory specialising in X-Ray imaging.
+nucleosynthesis: The creation of atomic nuclei through merging existing atomic nuclei.
+Photodissociation: A chemical reaction whereby a compound is broken by absorbing light.
+neutrinos: A type of subatomic particle.
+solar wind: The particles emitted by a star’s corona, consisting mainly of electrons.

@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>supernova</title>
         <link rel="stylesheet" href="bulma.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+        
         <style>
 
             html {
@@ -56,30 +58,14 @@
             .content {
                 padding-right: 1rem;
                 overflow-y: scroll;
+                overflow-x: visible;
                 height: 100%;
                 max-width: 100%;
             }
 
             .tooltip {
-                position: relative;
                 cursor: pointer;
-            }
-
-            .tooltip::after {
-                content: attr(data-tooltip);
-                position: absolute;
-                bottom: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: #333;
-                color: #fff;
-                padding: 6px;
-                border-radius: 4px;
                 white-space: nowrap;
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.2s;
-                font-size: 0.85rem;
             }
 
             .tooltip:hover::after {
@@ -111,6 +97,7 @@
             #text-content {
                 width: 22.5rem;
                 margin-bottom: 1rem;
+                overflow: hidden;
             }
 
             @keyframes fade-in {
@@ -120,6 +107,15 @@
                 to {
                     opacity: 1;
                 }
+            }
+
+            img {
+                border-radius: 5%;
+            }
+
+            figure {
+                margin: 0 !important;
+                margin-bottom: inherit !important;
             }
 
             #text-content * {

@@ -1,6 +1,15 @@
 import type { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import type { SceneData, SceneEx } from './types'
 import * as THREE from 'three'
+import tippy from 'tippy.js'
+
+function replaceGlossaryTerms(text: string, glossary: Map<string, string>): string {
+  for (const [pattern, definition] of glossary.entries()) {
+    const regex = new RegExp(pattern, 'gi') // pattern is already regex-safe
+    text = text.replace(regex, match => `<span class="tooltip has-text-info" data-tippy-content="${definition}">${match}</span>`)
+  }
+  return text
+}
 
 async function loadAssets(loader: OBJLoader, paths: string[]) {
   const assets = new Map<string, THREE.Mesh>()
@@ -76,16 +85,31 @@ export function deleteObject(obj: any) {
     obj.texture.dispose()
 }
 
-export function nextSlide(scene: SceneEx, content: HTMLElement) {
+export function nextSlide(scene: SceneEx, content: HTMLElement, glossary: Map<string, string>) {
   const hasNextSlide = scene.currentShot < scene.paragraphText.length
+
   if (hasNextSlide) {
+    const rawHTML = scene.paragraphText[scene.currentShot]
+
+    const replacedHTML = replaceGlossaryTerms(rawHTML, glossary)
+
+    console.log(replacedHTML)
+    console.log(rawHTML)
+
     const tempDiv = document.createElement('div')
-    tempDiv.innerHTML = scene.paragraphText[scene.currentShot]
+    tempDiv.innerHTML = replacedHTML
+
     while (tempDiv.firstChild) {
-      content.appendChild(tempDiv.firstChild) // Move children one by one
+      content.appendChild(tempDiv.firstChild)
     }
+
+    tippy('[data-tippy-content]', {
+      appendTo: document.body,
+    })
+
     scene.currentShot++
   }
+
   return hasNextSlide
 }
 
