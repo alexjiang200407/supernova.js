@@ -19,7 +19,7 @@ function newScene2(): Scene {
       })
     },
     next: nextSlide,
-    paragraphPaths: range(0, 3).map(n => `text/slide2/${n}.html`),
+    paragraphPaths: range(0, 4).map(n => `text/slide2/${n}.html`),
     handleShot: () => {},
   }
 }
