@@ -1,6 +1,5 @@
 import { destroyMovie, newMovie, next, play } from './movie'
 import newScene1 from './scenes/scene1'
-import newScene10 from './scenes/scene10'
 import newScene2 from './scenes/scene2'
 import newScene3 from './scenes/scene3'
 import newScene4 from './scenes/scene4'
@@ -9,6 +8,7 @@ import newScene6 from './scenes/scene6'
 import newScene7 from './scenes/scene7'
 import newScene8 from './scenes/scene8'
 import newScene9 from './scenes/scene9'
+import newScene10 from './scenes/scene10'
 import { sleep } from './util'
 
 const content = document.getElementById('text-content')
@@ -22,7 +22,7 @@ newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene
 
     window.addEventListener('beforeunload', unloadListener)
 
-    const scrollbar = document.getElementById('collapsible')
+    const scrollbar = document.getElementById('text-content')
     const nextButton = document.getElementById('next')
 
     if (nextButton && content && scrollbar) {
@@ -33,10 +33,12 @@ newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene
           nextButton.parentElement.removeChild(nextButton)
         }
 
-        Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
-          scrollbar.scrollTo({ behavior: 'smooth', left: 0, top: scrollbar.scrollHeight })
-        });
-
+        Promise.all(Array.from(document.images)
+          .filter(img => !img.complete)
+          .map(img => new Promise((resolve) => { img.onload = img.onerror = resolve })))
+          .then(() => {
+            scrollbar.scrollTo({ behavior: 'smooth', left: 0, top: scrollbar.scrollHeight })
+          })
       }
     }
 

@@ -6,8 +6,6 @@ import getPlanet from '../solarsystem/Planet'
 import newSun from '../solarsystem/Star'
 import getStarfield from '../starfield'
 import { range } from '../util'
-import Gas, { startGasAnimation } from '../fx/gas'
-
 
 function initScene(scene: SceneEx, camera: THREE.Camera) {
   const solarSystem = new THREE.Group()
