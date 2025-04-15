@@ -6,6 +6,8 @@ import getPlanet from '../solarsystem/Planet'
 import newSun from '../solarsystem/Star'
 import getStarfield from '../starfield'
 import { range } from '../util'
+import Gas, { startGasAnimation } from '../fx/gas'
+
 
 function initScene(scene: SceneEx, camera: THREE.Camera) {
   const solarSystem = new THREE.Group()
@@ -56,7 +58,7 @@ function initScene(scene: SceneEx, camera: THREE.Camera) {
   const asteroidBelt = getAsteroidBelt(Array.from(scene.assets.values()))
   solarSystem.add(asteroidBelt)
 
-  const starfield = getStarfield({ numStars: 500, size: 0.35 })
+  const starfield = getStarfield({ numStars: 10000, size: 1 })
   scene.base.add(starfield)
 
   const dirLight = new THREE.DirectionalLight(0x0099FF, 1)

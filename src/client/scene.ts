@@ -62,7 +62,7 @@ export async function initSceneEx(data: SceneData, loader: OBJLoader, camera: TH
   }
 
   data.init(sceneEx, camera)
-  data.handleShot(sceneEx, 1)
+  data.handleShot(sceneEx, 1, camera)
 
   return sceneEx
 }
@@ -92,9 +92,6 @@ export function nextSlide(scene: SceneEx, content: HTMLElement, glossary: Map<st
     const rawHTML = scene.paragraphText[scene.currentShot]
 
     const replacedHTML = replaceGlossaryTerms(rawHTML, glossary)
-
-    console.log(replacedHTML)
-    console.log(rawHTML)
 
     const tempDiv = document.createElement('div')
     tempDiv.innerHTML = replacedHTML

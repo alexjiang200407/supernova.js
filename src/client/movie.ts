@@ -93,6 +93,6 @@ export async function next(movie: Movie, content: HTMLElement) {
   if (!movie.scenes[movie.sceneIdx].next(movie.currentScene, content, movie.glossary)) {
     return nextScene(movie, content)
   }
-  movie.scenes[movie.sceneIdx].handleShot(movie.currentScene, movie.currentScene.currentShot)
+  movie.scenes[movie.sceneIdx].handleShot(movie.currentScene, movie.currentScene.currentShot, movie.camera)
   return true
 }

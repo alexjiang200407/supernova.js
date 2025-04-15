@@ -7,7 +7,7 @@ export type CameraInitCallback = (camera: THREE.Camera) => void
 export type SceneInitCallback = (scene: SceneEx, camera: THREE.Camera) => void
 export type UpdateCallback = (scene: SceneEx, time: number) => void
 export type NextCallback = (scene: SceneEx, content: HTMLElement, glossary: Map<string, string>) => boolean
-export type HandleShotCallback = (scene: SceneEx, shotIdx: number) => void
+export type HandleShotCallback = (scene: SceneEx, shotIdx: number, camera: THREE.Camera) => void
 
 export interface SceneData {
   assets: string[]

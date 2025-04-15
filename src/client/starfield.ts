@@ -2,9 +2,9 @@ import * as THREE from 'three'
 
 type Starfield = THREE.Points<THREE.BufferGeometry<THREE.NormalBufferAttributes>, THREE.PointsMaterial, THREE.Object3DEventMap>
 
-function getStarfield({ numStars = 500, size = 0.2 } = {}): Starfield {
+function getStarfield({ numStars = 1000000, size = 0.3 } = {}): Starfield {
   function randomSpherePoint() {
-    const radius = Math.random() * 25 + 25
+    const radius = Math.random() * 800 + 200
     const u = Math.random()
     const v = Math.random()
     const theta = 2 * Math.PI * u
@@ -35,7 +35,7 @@ function getStarfield({ numStars = 500, size = 0.2 } = {}): Starfield {
   geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3))
   geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
   const mat = new THREE.PointsMaterial({
-    size,
+    size: size,
     vertexColors: true,
     map: new THREE.TextureLoader().load(
       './textures/circle.png',

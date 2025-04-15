@@ -14,3 +14,6 @@ nucleosynthesis: The creation of atomic nuclei through merging existing atomic n
 Photodissociation: A chemical reaction whereby a compound is broken by absorbing light.
 neutrinos: A type of subatomic particle.
 solar wind: The particles emitted by a star’s corona, consisting mainly of electrons.
+Big Bang: The origin of the universe.
+interstellar medium: The space between stars within a galaxy, filled with gas (mostly hydrogen and helium), dust, and radiation
+photodisintegration: A nuclear reaction where an atomic nucleus is broken, emitting subatomic particles

@@ -1,5 +1,6 @@
 import { destroyMovie, newMovie, next, play } from './movie'
 import newScene1 from './scenes/scene1'
+import newScene10 from './scenes/scene10'
 import newScene2 from './scenes/scene2'
 import newScene3 from './scenes/scene3'
 import newScene4 from './scenes/scene4'
@@ -12,7 +13,7 @@ import { sleep } from './util'
 
 const content = document.getElementById('text-content')
 
-newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene4(), newScene5(), newScene6(), newScene7(), newScene8(), newScene9())
+newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene4(), newScene5(), newScene6(), newScene7(), newScene8(), newScene9(), newScene10())
   .then((m) => {
     const unloadListener = () => {
       destroyMovie(m)
@@ -31,7 +32,11 @@ newMovie(content as HTMLElement, newScene1(), newScene2(), newScene3(), newScene
           content.innerHTML = `<h1 class='title'>The End!</h1><p>This is the end of my APOD. Thank you and have a good day!</p>`
           nextButton.parentElement.removeChild(nextButton)
         }
-        scrollbar.scrollTo({ behavior: 'smooth', left: 0, top: scrollbar.scrollHeight })
+
+        Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+          scrollbar.scrollTo({ behavior: 'smooth', left: 0, top: scrollbar.scrollHeight })
+        });
+
       }
     }
 
