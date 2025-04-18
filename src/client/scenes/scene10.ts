@@ -64,7 +64,7 @@ function newScene10(): Scene {
       })
     },
     next: nextSlide,
-    paragraphPaths: range(1, 3).map(n => `text/slide10/${n}.html`),
+    paragraphPaths: range(1, 5).map(n => `text/slide10/${n}.html`),
     handleShot,
   }
 }
